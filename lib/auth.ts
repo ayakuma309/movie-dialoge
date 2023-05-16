@@ -3,10 +3,8 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   User,
   getAuth,
-  signInWithRedirect,
   signOut,
   onAuthStateChanged,
-  GoogleAuthProvider,
 } from "firebase/auth";
 
 type UserState = User | null; // null の場合はログインしていない状態
@@ -16,12 +14,6 @@ const userState = atom<UserState>({
   dangerouslyAllowMutability: true,
 });
 
-// ログイン
-export const login = (): Promise<void> => {
-  const provider = new GoogleAuthProvider();
-  const auth = getAuth();
-  return signInWithRedirect(auth, provider);
-};
 // ログアウト
 export const logout = (): Promise<void> => {
   const auth = getAuth();

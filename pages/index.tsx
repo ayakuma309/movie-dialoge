@@ -1,13 +1,9 @@
 import { NextPage } from "next";
-import { useUser, login, logout } from "../lib/auth";
+import { useUser, logout } from "../lib/auth";
 import Link from "next/link";
 
 const Home: NextPage = () => {
   const user = useUser();
-
-  const handleLogin = (): void => {
-    login().catch((error) => console.error(error));
-  };
 
   const handleLogout = (): void => {
     logout().catch((error) => console.error(error));
