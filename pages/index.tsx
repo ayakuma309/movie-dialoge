@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import { useUser, login, logout } from "../lib/auth";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const user = useUser();
@@ -27,7 +28,7 @@ const Home: NextPage = () => {
         ) : (
           <>
             <h2>ログインしていない</h2>
-            <button onClick={handleLogin}>ログイン</button>
+            <Link href="/loginForm">ログイン</Link>
           </>
         )}
       </div>
