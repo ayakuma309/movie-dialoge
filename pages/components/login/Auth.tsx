@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword,  GoogleAuthProvider, signInWithPopup} from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword,  GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail} from "firebase/auth"
+import DialogModal from '../common/DialogModal'
+import { TextField } from '@mui/material'
 
 const Auth: React.FC = () => {
   const router = useRouter()
@@ -8,6 +10,10 @@ const Auth: React.FC = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true);
+
+  //パスワードリセットを押したらモーダルが開く
+  const [openModal, setOpenModal] = React.useState(false);
+  const [resetEmail, setResetEmail] = useState("");
 
   //新規登録
   const signUpEmail = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,6 +38,20 @@ const Auth: React.FC = () => {
     router.push("/")
   }
 
+   //リセットパスワード(firebase)
+  const sendResetEmail = async (e: React.MouseEvent<HTMLElement>) => {
+    const auth = getAuth();
+    await sendPasswordResetEmail(auth, resetEmail)
+      .then(() => {
+        setOpenModal(false);
+        setResetEmail("");
+      })
+      .catch((err) => {
+        alert(err.message);
+        setResetEmail("");
+      });
+  };
+
   return (
     <div className='my-0 mt-20 sm:mt-0'>
       <div>
@@ -52,7 +72,7 @@ const Auth: React.FC = () => {
               placeholder='email address'
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setEmail(e.currentTarget.value);
+                setResetEmail(e.target.value);
               }}
             />
           </div>
@@ -77,16 +97,36 @@ const Auth: React.FC = () => {
               onClick={() => setIsLogin(!isLogin)}
               className='cursor-pointer font-medium text-white hover:text-gray-500'
             >
-              ログイン or アカウント作成
+              {isLogin ? 'アカウント作成はこちら' : 'ログインはこちら'}
             </span>
           </div>
         </div>
-
+        <DialogModal  open={openModal} close={() => setOpenModal(false)} >
+          <label>Email</label>
+          <TextField
+            InputLabelProps={{
+              shrink: true,
+            }}
+            type="email"
+            name="email"
+            value={resetEmail}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setResetEmail(e.target.value);
+            }}
+            fullWidth
+          />
+          <button
+            className='group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 my-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            onClick={sendResetEmail}
+          >
+            変更する
+          </button>
+        </DialogModal>
         <div>
           <button
             type='submit'
             className='group relative flex w-full justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
-          >
+            disabled={ !email || password.length < 6 }>
             <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
               <svg
                 className='h-5 w-5 text-white group-hover:text-indigo-400'
@@ -110,6 +150,12 @@ const Auth: React.FC = () => {
           >
             SignIn with Google
           </button>
+          <div
+            onClick={() => setOpenModal(true)}
+            className='text-white'
+          >
+            password change
+          </div>
         </div>
       </form>
     </div>
