@@ -1,34 +1,24 @@
 import { NextPage } from "next";
 import { useUser, logout } from "../lib/auth";
 import Link from "next/link";
+import Layout from "./components/common/Layout";
 
 const Home: NextPage = () => {
   const user = useUser();
-
-  const handleLogout = (): void => {
-    logout().catch((error) => console.error(error));
-  };
-
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24`}
-    >
+    <Layout title="セリフから選ぶ映画">
       <div>
         {user !== null ? (
           <>
             <h2>ログインしている</h2>
-            <button onClick={handleLogout}>ログアウト</button>
-            <p>{user.displayName}</p>
-            {user.uid}
           </>
         ) : (
           <>
             <h2>ログインしていない</h2>
-            <Link href="/loginForm">ログイン</Link>
           </>
         )}
       </div>
-    </main>
+    </Layout>
   );
 }
 export default Home;
