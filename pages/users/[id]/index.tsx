@@ -6,8 +6,8 @@ export default function UserPage() {
   const user = useUser();
   return (
     <Layout title="マイページ">
-      <div className="container mx-auto flex flex-col items-center sm:max-w-7xl">
-        <div className="mt-24">
+      <div>
+        <div>
           {user ? (
             <div>
               <MyProfile />
