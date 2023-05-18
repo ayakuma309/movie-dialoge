@@ -7,16 +7,18 @@ const Home: NextPage = () => {
   const user = useUser();
   return (
     <Layout title="セリフから選ぶ映画">
-      <div>
-        {user !== null ? (
-          <>
-            <h2>ログインしている</h2>
-          </>
-        ) : (
-          <>
-            <h2>ログインしていない</h2>
-          </>
-        )}
+      <div className="container mx-auto flex flex-col items-center sm:max-w-7xl">
+        <div className="mt-24">
+          {user !== null ? (
+            <>
+              <h2>ログインしている</h2>
+            </>
+          ) : (
+            <>
+              <h2>ログインしていない</h2>
+            </>
+          )}
+        </div>
       </div>
     </Layout>
   );

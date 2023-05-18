@@ -1,5 +1,6 @@
 import Layout from "@/pages/components/common/Layout";
 import {  useUser } from "../../../lib/auth";
+import MyProfile from "@/pages/components/MyProfile";
 
 export default function UserPage() {
   const user = useUser();
@@ -9,8 +10,7 @@ export default function UserPage() {
         <div className="mt-24">
           {user ? (
             <div>
-              <p>{user.uid}</p>
-              <p>{user.displayName}</p>
+              <MyProfile />
             </div>
           ) : (
             <p>ロード中…</p>
