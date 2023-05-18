@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword,  GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail} from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword,  GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile} from "firebase/auth"
 import DialogModal from '../common/DialogModal'
 import { TextField } from '@mui/material'
 
@@ -10,6 +10,7 @@ const Auth: React.FC = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true);
+  const [displayName, setDisplayName] = useState("");
 
   //パスワードリセットを押したらモーダルが開く
   const [openModal, setOpenModal] = React.useState(false);
@@ -18,7 +19,10 @@ const Auth: React.FC = () => {
   //新規登録
   const signUpEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    await createUserWithEmailAndPassword(auth, email, password)
+    const authUser = await createUserWithEmailAndPassword(auth, email, password)
+    await updateProfile( authUser.user , {
+      displayName: displayName
+    });
     router.push("/")
   }
   //ログイン
@@ -62,6 +66,22 @@ const Auth: React.FC = () => {
       <form className='mx-10 mt-8 space-y-6 sm:mx-0' onSubmit={isLogin ? signInEmail : signUpEmail}>
         <input type='hidden' name='remember' value='true' />
         <div className='-space-y-px rounded-md shadow-sm'>
+          {!isLogin && (
+            <div>
+              <input
+              id='username'
+              type='username'
+              autoComplete='username'
+              required
+              className='relative block w-full appearance-none rounded-none rounded-t-md border border-gray-300 px-3 py-3 text-xs text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm'
+              placeholder='username'
+              value={displayName}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setDisplayName(e.target.value);
+              }}
+            />
+            </div>
+          )}
           <div>
             <input
               id='email'
@@ -72,7 +92,7 @@ const Auth: React.FC = () => {
               placeholder='email address'
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                setResetEmail(e.target.value);
+                setEmail(e.target.value);
               }}
             />
           </div>
