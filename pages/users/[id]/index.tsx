@@ -1,6 +1,6 @@
-import Layout from "@/pages/components/common/Layout";
-import {  useUser } from "../../../lib/auth";
-import MyProfile from "@/pages/components/MyProfile";
+import Layout from "@/components/common/Layout";
+import { useUser } from "../../../lib/auth";
+import MyProfile from "@/components/MyProfile";
 
 export default function UserPage() {
   const user = useUser();
@@ -18,6 +18,5 @@ export default function UserPage() {
         </div>
       </div>
     </Layout>
-  )
+  );
 }
-

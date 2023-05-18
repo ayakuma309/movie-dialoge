@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useUser, logout } from "../lib/auth";
 import Link from "next/link";
-import Layout from "./components/common/Layout";
+import Layout from "../components/common/Layout";
 
 const Home: NextPage = () => {
   const user = useUser();
@@ -22,5 +22,5 @@ const Home: NextPage = () => {
       </div>
     </Layout>
   );
-}
+};
 export default Home;
