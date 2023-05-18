@@ -23,7 +23,7 @@ const MyProfile: React.FC = () => {
                 </div>
               </div>
               <div className="-mt-3 text-center sm:mt-1">
-                <h3 className="text-blueGray-700 mb-2 mb-2 text-4xl font-semibold leading-normal">
+                <h3 className="text-blueGray-700 mb-2 text-4xl font-semibold leading-normal">
                   <p>{user?.displayName}</p>
                 </h3>
                 <div className="text-blueGray-400 mt-0 mb-2 text-sm font-bold uppercase leading-normal">
@@ -31,12 +31,14 @@ const MyProfile: React.FC = () => {
                   {user?.email}
                 </div>
                 <div>
-                  <button
-                    className="rounded bg-gray-600  text-white px-4 py-4 text-xs font-bold uppercase hover:bg-white hover:text-gray-600 lg:block"
-                    type="button"
-                  >
-                    マイページ編集
-                  </button>
+                  <Link href={`/users/${user?.uid}/edit`}>
+                    <button
+                      className="rounded bg-gray-600  text-white px-4 py-4 text-xs font-bold uppercase hover:bg-white hover:text-gray-600 lg:block"
+                      type="button"
+                    >
+                      マイページ編集
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="container mx-auto flex flex-col flex-wrap px-5 py-2">
