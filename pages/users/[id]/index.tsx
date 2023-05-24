@@ -1,16 +1,16 @@
-import Layout from "@/pages/components/common/Layout";
-import {  useUser } from "../../../lib/auth";
+import Layout from "@/components/common/Layout";
+import { useUser } from "../../../lib/auth";
+import MyProfile from "@/components/MyProfile";
 
 export default function UserPage() {
   const user = useUser();
   return (
     <Layout title="マイページ">
-      <div className="container mx-auto flex flex-col items-center sm:max-w-7xl">
-        <div className="mt-24">
+      <div>
+        <div>
           {user ? (
             <div>
-              <p>{user.uid}</p>
-              <p>{user.displayName}</p>
+              <MyProfile />
             </div>
           ) : (
             <p>ロード中…</p>
@@ -18,6 +18,5 @@ export default function UserPage() {
         </div>
       </div>
     </Layout>
-  )
+  );
 }
-

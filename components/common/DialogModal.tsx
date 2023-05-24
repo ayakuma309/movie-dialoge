@@ -21,7 +21,7 @@ const DialogModal: React.FC<DialogProps> = (props) => {
         aria-describedby='alert-dialog-description'
       >
         <DialogTitle id='alert-dialog-title'>
-          password変更のためメール送信
+          password変更
         </DialogTitle>
         <DialogContent>
           <DialogContentText id='alert-dialog-description'>

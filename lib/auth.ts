@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import uuid from 'react-uuid';
 import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   User,
@@ -6,6 +7,13 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
+
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+} from 'firebase/firestore'
 
 type UserState = User | null; // null の場合はログインしていない状態
 const userState = atom<UserState>({
@@ -33,9 +41,21 @@ export const useAuth = (): boolean => {
   useEffect(() => {
     const auth = getAuth();
 		//ユーザ認証を監視し,変更があったときに引数のコールバック関数を実行
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
       setIsLoading(false);
+      //DB保存する
+      if (user) {
+        const db = getFirestore();
+        const userRef = doc(db, "users", user.uid); // ユーザー情報を取得
+        const userDoc = await getDoc(userRef);
+        if (!userDoc.exists()) {
+          await setDoc(userRef, {
+            id: uuid(),
+            displayName: user.displayName,
+          });
+        }
+      }
     });
     return unsubscribe;
   }, [setUser]);
