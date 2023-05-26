@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 .bg-Color{
-  background: linear-gradient(45deg, #051637, #1c2c52, #5c658b);
+  background: linear-gradient(135deg, #e1e2e4, #92abe4, #5c658b);
+}
+body{
+  background: linear-gradient(135deg, #e1e2e4, #92abe4, #5c658b);
 }
