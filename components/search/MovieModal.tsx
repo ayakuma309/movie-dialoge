@@ -1,37 +1,74 @@
 import { NextPage } from 'next';
-import React, { useState }  from 'react';
+import React, { ChangeEvent, FormEvent, useState }  from 'react';
+import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { MovieModalProps } from '../../types/MovieTypes';
+import { collection, addDoc, getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '80%',
+  width: '50%',
   bgcolor: 'background.paper',
   border: 'none',
   boxShadow: 24,
   p: 4,
   margin: '0 auto',
   textAlign: 'center',
+  display: 'flex',
+  borderRadius: '10px',
 };
 
 const MovieModal: NextPage<MovieModalProps> = (props) => {
-  const { title, overview, poster_path } = props;
+  const { id, title, overview, poster_path } = props;
   const [open, setOpen] = useState(false);
+  const [dialogue, setDialogue] = useState("");
+
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const inputDialogue = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setDialogue(e.target.value);
+  };
+
+  const auth = getAuth();
+  const db = getFirestore();
+  const router = useRouter();
+
+  const saveMovie = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        const docRef = await addDoc(collection(db, 'movies'), {
+          id,
+          title,
+          poster_path,
+          user_id: user.uid,
+          dialogue: dialogue,
+        });
+        console.log('Document written with ID: ', docRef.id);
+        router.push(`/movie/${docRef.id}/dialogue`);
+      } else {
+        // ユーザーがログインしていない場合の処理
+        console.log('User is not logged in');
+      }
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
+  };
   return (
     <div>
       <Button onClick={handleOpen}>
         <img
           src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
           alt={title + ' poster'}
-          className="mx-auto"
         />
       </Button>
       <Modal
@@ -41,17 +78,39 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <img
-            src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
-            alt={title + ' poster'}
-            className="mx-auto"
-          />
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            {title}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            {overview}
-          </Typography>
+          <div className='flex-1'>
+            <img
+              src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
+              alt={title + ' poster'}
+              className="mx-auto"
+            />
+            <Typography id="modal-modal-title" variant="h6" component="h2">
+              <small>{title}</small>
+            </Typography>
+          </div>
+          <form
+            className="space-y-6 flex flex-col justify-center"
+            onSubmit={saveMovie}
+            >
+            <label
+              htmlFor="description"
+              className="block text-sm font-medium text-neutral-600"
+            >
+            セリフを入力
+            </label>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Message..."
+              onChange={inputDialogue}
+              className="block w-full px-5 py-3 mt-2 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300 apearance-none autoexpand"
+            />
+            <button
+              className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-600 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
+            >
+              送信
+            </button>
+          </form>
         </Box>
       </Modal>
     </div>

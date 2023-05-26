@@ -9,6 +9,7 @@ export interface MovieItemProps {
 }
 
 interface MovieModalProps {
+  id: number;
   title: string;
   overview: string;
   poster_path: string;
