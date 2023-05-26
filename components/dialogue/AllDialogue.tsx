@@ -1,6 +1,7 @@
 import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { AllDialogueProps } from '../../types/MovieTypes';
+import DialogueModal from './DialogueModal';
 
 
 const AllDialogue = () => {
@@ -26,13 +27,11 @@ const AllDialogue = () => {
     <div className='flex '>
       {movies.map((movie) => (
         <div key={movie.id}>
-          <img
-              src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`}
-              alt={movie.title + ' poster'}
-              className="mx-auto"
-            />
-          <h1>{movie.title}</h1>
-          <p>{movie.dialogue}</p>
+          <DialogueModal
+            title={movie.title}
+            dialogue={movie.dialogue}
+            poster_path={movie.poster_path}
+          />
         </div>
       ))}
     </div>

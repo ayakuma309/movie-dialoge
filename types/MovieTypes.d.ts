@@ -21,3 +21,9 @@ export interface AllDialogueProps {
   dialogue: string;
   poster_path: string;
 }
+
+export interface DialogueModalProps {
+  title: string;
+  dialogue: string;
+  poster_path: string;
+}
