@@ -23,6 +23,10 @@ const style = {
   textAlign: 'center',
   display: 'flex',
   borderRadius: '10px',
+  "@media screen and (max-width:900px)": {
+    width: '80%',
+    flexDirection: 'column',
+  },
 };
 
 const MovieModal: NextPage<MovieModalProps> = (props) => {
@@ -89,7 +93,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             </Typography>
           </div>
           <form
-            className="space-y-6 flex flex-col justify-center"
+            className="space-y-6 flex flex-col flex-1 justify-center"
             onSubmit={saveMovie}
             >
             <label
