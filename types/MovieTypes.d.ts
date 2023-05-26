@@ -2,7 +2,14 @@ export interface MovieInfo {
   id: number;
   title: string;
   poster_path: string;
-  release_date: string;
-  vote_average: number;
   overview: string;
+}
+export interface MovieItemProps {
+  movies: MovieInfo[];
+}
+
+interface MovieModalProps {
+  title: string;
+  overview: string;
+  poster_path: string;
 }
