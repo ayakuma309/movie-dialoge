@@ -9,7 +9,7 @@ const MovieItem: NextPage<MovieItemProps> = ({ movies }) => {
       {movies
         .filter((movie) => movie.poster_path)
         .map((movie) => (
-          <div className="card" key={movie.id}>
+          <div className="card mx-auto" key={movie.id}>
             <MovieModal
               id={movie.id}
               title={movie.title}

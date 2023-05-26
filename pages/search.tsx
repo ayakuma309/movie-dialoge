@@ -49,12 +49,6 @@ const SearchMovie: NextPage = () => {
                         value={query}
                         onChange={handleQueryChange}
                     />
-                    <button
-                        className="text-amber-600 px-6 py-2 rounded-md bg-amber-100 hover:bg-amber-200"
-                        type="submit"
-                    >
-                        Search
-                    </button>
                 </form>
                 <MovieItem movies={movies} />
             </div>
