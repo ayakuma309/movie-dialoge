@@ -12,8 +12,8 @@ const Home: NextPage = () => {
         <div>
           {user !== null ? (
             <>
-              <AllDialogue />
               <Link href="/search">検索</Link>
+              <AllDialogue />
             </>
           ) : (
             <>

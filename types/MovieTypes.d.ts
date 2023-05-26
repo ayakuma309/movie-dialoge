@@ -8,9 +8,16 @@ export interface MovieItemProps {
   movies: MovieInfo[];
 }
 
-interface MovieModalProps {
+export interface MovieModalProps {
   id: number;
   title: string;
   overview: string;
+  poster_path: string;
+}
+
+export interface AllDialogueProps {
+  id: string;
+  title: string;
+  dialogue: string;
   poster_path: string;
 }
