@@ -1,6 +1,8 @@
 import { NextPage } from "next";
 import { useUser } from "../lib/auth";
 import Layout from "../components/common/Layout";
+import AllDialogue from "@/components/dialogue/AllDialogue";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const user = useUser();
@@ -10,7 +12,8 @@ const Home: NextPage = () => {
         <div>
           {user !== null ? (
             <>
-              <h2>ログインしている</h2>
+              <AllDialogue />
+              <Link href="/search">検索</Link>
             </>
           ) : (
             <>
