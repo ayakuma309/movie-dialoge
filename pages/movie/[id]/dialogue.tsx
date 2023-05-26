@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
+import Layout from '@/components/common/Layout';
 
 
 const MovieNewDialogue: NextPage = () => {
@@ -37,14 +38,14 @@ const MovieNewDialogue: NextPage = () => {
 
   const { title, poster_path, dialogue} = movie;
   return (
-    <div >
+    <Layout title={title}>
       <h1>{title}</h1>
       <img
         src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
         alt={title + ' poster'}
       />
       <p>{dialogue}</p>
-    </div>
+    </Layout>
   );
 };
 
