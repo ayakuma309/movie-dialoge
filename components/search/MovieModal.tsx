@@ -31,7 +31,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
         <img
           src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
           alt={title + ' poster'}
-          className="card--img"
+          className="mx-auto"
         />
       </Button>
       <Modal

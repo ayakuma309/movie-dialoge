@@ -5,7 +5,7 @@ import { NextPage } from 'next';
 
 const MovieItem: NextPage<MovieItemProps> = ({ movies }) => {
   return (
-    <div className="card-list">
+    <div className="flex flex-wrap mx-auto">
       {movies
         .filter((movie) => movie.poster_path)
         .map((movie) => (
