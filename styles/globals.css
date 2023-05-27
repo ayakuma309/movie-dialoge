@@ -5,10 +5,87 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap');
 
 .bg-Color{
-  background: linear-gradient(135deg, #e1e2e4, #92abe4, #5c658b);
+  background: linear-gradient(135deg, #e1e2e4, #bbccf5, #90a3fa);
 }
-body{
-  background: linear-gradient(135deg, #e1e2e4, #92abe4, #5c658b);
+
+
+.movie-dialogue{
+  height: 100%;
   min-height: 100vh;
   font-family: 'Noto Serif JP', serif;
+  background-image: url('../public/film.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* エンドロール風にする */
+.wrapper {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  font: 300 30px/1 'Open Sans Condensed', sans-serif;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fff;
+  animation: 180s credits linear infinite;
+}
+
+
+@keyframes credits {
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: -500%;
+  }
+}
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container .card {
+  margin: 0 1rem 2rem;
+  padding: 2.2rem 2.5rem;
+  max-width: 300px;
+  background: #f8f4f3;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0px 0px 25px 2px #777777;
+  border-radius: 10px;
+}
+
+.container .card:after,
+.container .card:before {
+  position: absolute;
+  font-weight: bold;
+  font-size: 1.6rem;
+  padding: 5px;
+  content: var(--card);
+  color: var(--suit);
+}
+.container .card:after {
+  top: 0;
+  left: 0;
+}
+.container .card:before {
+  bottom: 0;
+  right: 0;
+}
+
+.card--refresh {
+  transform: translateX(20px) rotate(2deg);
+}
+.card--refresh:after,
+.card--refresh:before,
+.card--refresh .card__content {
+  opacity: 0;
 }
