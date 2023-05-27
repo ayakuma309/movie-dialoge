@@ -23,8 +23,9 @@ const AllDialogue = () => {
     fetchMovies();
   }, []);
 
+
   return (
-    <div className='flex '>
+    <div className='mt-5'>
       {movies.map((movie) => (
         <div key={movie.id}>
           <DialogueModal

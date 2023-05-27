@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import React, { useState } from 'react'
 import { DialogueModalProps } from '@/types/MovieTypes';
-import { Box, Button, Modal, Typography } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -18,7 +18,7 @@ const style = {
   display: 'flex',
   borderRadius: '10px',
   "@media screen and (max-width:900px)": {
-    width: '80%',
+    width: '50%',
     flexDirection: 'column',
   },
 };
@@ -28,11 +28,29 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const fontRandomStyle = () => {
+    const fontSize = Math.floor(Math.random() * 25 + 15);
+    const positionX = Math.floor(Math.random() * 20) + 10;
+
+    const randomStyle = {
+      left: `${positionX}%`,
+      fontSize: `${fontSize}px`,
+    };
+
+    return randomStyle;
+  };
+
   return (
     <div>
-      <Button onClick={handleOpen}>
-        <p>{dialogue}</p>
-      </Button>
+      <button onClick={handleOpen}>
+        <div
+          className="dialogue mt-7 transition duration-500 ease-in-out"
+          style={fontRandomStyle()}
+          >
+          {dialogue}
+        </div>
+      </button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -44,6 +62,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             <img
               src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
               alt={title + ' poster'}
+              className="mx-auto"
             />
           </div>
           <div className="flex flex-col flex-1 justify-center">
