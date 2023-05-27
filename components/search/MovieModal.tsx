@@ -34,7 +34,6 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
   const [open, setOpen] = useState(false);
   const [dialogue, setDialogue] = useState("");
 
-
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const inputDialogue = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -106,6 +105,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
               id="description"
               name="description"
               placeholder="Message..."
+              value={dialogue}
               onChange={inputDialogue}
               className="block w-full px-5 py-3 mt-2 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300 apearance-none autoexpand"
             />
