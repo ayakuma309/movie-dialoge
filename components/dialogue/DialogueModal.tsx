@@ -18,7 +18,7 @@ const style = {
   display: 'flex',
   borderRadius: '10px',
   "@media screen and (max-width:900px)": {
-    width: '50%',
+    width: '80%',
     flexDirection: 'column',
   },
 };
@@ -45,7 +45,8 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
     <div>
       <button onClick={handleOpen}>
         <div
-          className="dialogue mt-7 transition duration-500 ease-in-out"
+          className="dialogue mt-7 transition duration-500 ease-in-out
+          transform hover:-translate-y-1 hover:scale-110 hover:text-blue-900"
           style={fontRandomStyle()}
           >
           {dialogue}

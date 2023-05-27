@@ -8,7 +8,7 @@ const Home: NextPage = () => {
   const user = useUser();
   return (
     <Layout title="セリフから選ぶ映画">
-      <div>
+      <div className="movie-dialogue">
         <div>
           {user !== null ? (
             <>
