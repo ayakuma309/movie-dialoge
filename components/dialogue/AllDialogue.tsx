@@ -33,19 +33,22 @@ const AllDialogue = () => {
       setRandomMovies(shuffledmovies);
     }
   }, [movies]);
-
   return (
     <div className='dialogue'>
       <div className="flex flex-wrap">
-        {randomMovies.map((movie) => (
-          <div key={movie.id}>
-            <DialogueModal
-              title={movie.title}
-              dialogue={movie.dialogue}
-              poster_path={movie.poster_path}
-            />
-          </div>
-        ))}
+        {randomMovies &&
+        <div>
+          {randomMovies.map((movie) => (
+            <div key={movie.movie_id}>
+              <DialogueModal
+                title={movie.title}
+                dialogue={movie.dialogue}
+                poster_path={movie.poster_path}
+              />
+            </div>
+          ))}
+        </div>
+      }
       </div>
     </div>
   );

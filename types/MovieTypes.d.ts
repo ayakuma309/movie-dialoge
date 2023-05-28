@@ -16,6 +16,7 @@ export interface MovieModalProps {
 }
 
 export interface AllDialogueProps {
+  movie_id: string;
   id: string;
   title: string;
   dialogue: string;

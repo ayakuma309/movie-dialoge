@@ -8,6 +8,7 @@ import Modal from '@mui/material/Modal';
 import { MovieModalProps } from '../../types/MovieTypes';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import uuid from 'react-uuid';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -50,6 +51,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
       const user = auth.currentUser;
       if (user) {
         const docRef = await addDoc(collection(db, 'movies'), {
+          movie_id: uuid(),
           id,
           title,
           poster_path,
@@ -104,7 +106,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             <textarea
               id="description"
               name="description"
-              placeholder="Message..."
+              placeholder="セリフを入力してください"
               value={dialogue}
               onChange={inputDialogue}
               className="block w-full px-5 py-3 mt-2 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300 apearance-none autoexpand"
