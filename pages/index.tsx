@@ -1,16 +1,19 @@
 import { NextPage } from "next";
 import { useUser } from "../lib/auth";
 import Layout from "../components/common/Layout";
+import AllDialogue from "@/components/dialogue/AllDialogue";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const user = useUser();
   return (
     <Layout title="セリフから選ぶ映画">
-      <div>
+      <div className="movie-dialogue">
         <div>
           {user !== null ? (
             <>
-              <h2>ログインしている</h2>
+              <Link href="/search">検索</Link>
+              <AllDialogue />
             </>
           ) : (
             <>

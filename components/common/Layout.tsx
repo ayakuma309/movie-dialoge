@@ -11,7 +11,7 @@ const Layout: React.FC<MyComponentProps> = ({
   title = 'セリフから選ぶ映画',
 }) => {
   return (
-    <div className='mx-auto flex min-h-screen flex-col items-center justify-center font-mono'>
+    <div className='mx-auto flex min-h-screen flex-col items-center justify-center'>
       <Head>
         <title>{title}</title>
       </Head>

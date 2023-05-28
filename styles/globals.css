@@ -2,6 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap');
+
 .bg-Color{
-  background: linear-gradient(45deg, #051637, #1c2c52, #5c658b);
+  background: linear-gradient(135deg, #e1e2e4, #bbccf5, #90a3fa);
+}
+
+
+.movie-dialogue{
+  height: 100%;
+  min-height: 100vh;
+  font-family: 'Noto Serif JP', serif;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container .card {
+  margin: 0 1rem 2rem;
+  padding: 2.2rem 2.5rem;
+  width: 300px;
+  height: 300px;
+  overflow: scroll;
+  background: #f8f4f3;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0px 0px 25px 2px #777777;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container .card:after,
+.container .card:before {
+  position: absolute;
+  font-weight: bold;
+  font-size: 1.6rem;
+  padding: 5px;
+  content: var(--card);
+  color: var(--suit);
 }
