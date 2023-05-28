@@ -13,34 +13,7 @@
   height: 100%;
   min-height: 100vh;
   font-family: 'Noto Serif JP', serif;
-  /* background-image: url('../public/film.jpg');
-  background-repeat: no-repeat;
-  background-size: contain; */
 }
-
-/* エンドロール風にする */
-.wrapper {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  font: 300 30px/1 'Open Sans Condensed', sans-serif;
-  text-align: center;
-  text-transform: uppercase;
-  color: #fff;
-  animation: 180s credits linear infinite;
-}
-
-
-@keyframes credits {
-  0% {
-    top: 100%;
-  }
-  100% {
-    top: -500%;
-  }
-}
-
 
 .container {
   display: flex;
@@ -53,7 +26,9 @@
 .container .card {
   margin: 0 1rem 2rem;
   padding: 2.2rem 2.5rem;
-  max-width: 300px;
+  width: 300px;
+  height: 300px;
+  overflow: scroll;
   background: #f8f4f3;
   border-radius: 12px;
   transition: all 0.2s ease;
@@ -61,6 +36,9 @@
   cursor: pointer;
   box-shadow: 0px 0px 25px 2px #777777;
   border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .container .card:after,

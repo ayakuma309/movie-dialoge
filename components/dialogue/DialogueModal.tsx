@@ -29,27 +29,24 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const fontRandomStyle = () => {
-    const fontSize = Math.floor(Math.random() * 25 + 15);
-    const positionX = Math.floor(Math.random() * 20) + 10;
-
-    const randomStyle = {
-      left: `${positionX}%`,
-      fontSize: `${fontSize}px`,
-    };
-
-    return randomStyle;
-  };
-
   return (
     <div>
       <button onClick={handleOpen}>
         <div
           className="dialogue mt-7 transition duration-500 ease-in-out
           transform hover:-translate-y-1 hover:scale-110 hover:text-blue-900"
-          style={fontRandomStyle()}
           >
-          {dialogue}
+          <div className="card transition duration-500 ease-in-out
+          transform hover:-translate-y-1 hover:scale-110 hover:text-blue-900">
+            <div className="card__content">
+              <p className="description">
+                {dialogue}
+              </p>
+              <p className="title text-gray-600 mt-3">
+                <small>{title}より</small>
+              </p>
+            </div>
+          </div>
         </div>
       </button>
       <Modal
