@@ -19,6 +19,7 @@ export interface MovieModalProps {
 
 //AllDialogue.tsx
 export interface AllDialogueProps {
+  documentId: string;
   movie_id: string;
   id: string;
   title: string;
@@ -27,6 +28,7 @@ export interface AllDialogueProps {
 }
 //DialogueModal.tsx
 export interface DialogueModalProps {
+  documentId: string;
   title: string;
   dialogue: string;
   poster_path: string;

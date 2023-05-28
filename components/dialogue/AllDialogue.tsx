@@ -14,7 +14,10 @@ const AllDialogue = () => {
       try {
         const moviesCollectionRef = collection(db, 'movies');
         const querySnapshot = await getDocs(moviesCollectionRef);
-        const movieData = querySnapshot.docs.map((doc) => doc.data() as AllDialogueProps);
+        const movieData = querySnapshot.docs.map((doc) => {
+          const data = doc.data() as AllDialogueProps;
+          return { ...data, documentId: doc.id }; // ドキュメントのIDを追加する
+        });
         setMovies(movieData);
       } catch (error) {
         console.error('Error fetching movies: ', error);
@@ -41,6 +44,7 @@ const AllDialogue = () => {
           {randomMovies.map((movie) => (
             <div key={movie.movie_id}>
               <DialogueModal
+                documentId={movie.documentId}
                 title={movie.title}
                 dialogue={movie.dialogue}
                 poster_path={movie.poster_path}

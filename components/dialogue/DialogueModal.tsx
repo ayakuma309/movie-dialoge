@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import React, { useState } from 'react'
 import { DialogueModalProps } from '@/types/MovieTypes';
 import { Box, Modal, Typography } from '@mui/material';
+import Link from 'next/link';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -23,7 +24,7 @@ const style = {
   },
 };
 const DialogueModal: NextPage<DialogueModalProps> = (props) => {
-  const { title, dialogue, poster_path } = props;
+  const { documentId,title, dialogue, poster_path } = props;
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -70,6 +71,11 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <small className='text-gray-500'>{title}</small>
             </Typography>
+            <Link href={`/movie/${documentId}/movieDetail`}>
+              <button className='btn btn-primary'>
+                詳しく見る
+              </button>
+            </Link>
           </div>
         </Box>
       </Modal>
