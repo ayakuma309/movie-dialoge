@@ -31,7 +31,7 @@ const style = {
 };
 
 const MovieModal: NextPage<MovieModalProps> = (props) => {
-  const { id, title, overview, poster_path } = props;
+  const { id, title, poster_path } = props;
   const [open, setOpen] = useState(false);
   const [dialogue, setDialogue] = useState("");
 
@@ -59,7 +59,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           dialogue: dialogue,
         });
         console.log('Document written with ID: ', docRef.id);
-        router.push(`/movie/${docRef.id}/dialogue`);
+        router.push(`/movie/${docRef.id}/movieDetail`);
       } else {
         // ユーザーがログインしていない場合の処理
         console.log('User is not logged in');
