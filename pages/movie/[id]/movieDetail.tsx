@@ -10,7 +10,6 @@ const MovieNewDialogue: NextPage = () => {
   const { id } = router.query;
   const [movie, setMovie] = useState<any>(null); // 映画情報の状態
   const [movieDetail, setMovieDetail] = useState<DialogueProps>(); // 映画詳細情報の状態
-  const [movieImages, setMovieImages] = useState<any>();
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -52,22 +51,6 @@ const MovieNewDialogue: NextPage = () => {
     fetchMovieDetail();
   }, [movie]);
 
-  useEffect(() => {
-    const fetchMovieImages = async () => {
-      try {
-        if(movie && movie.id){
-          const url = `https://api.themoviedb.org/3/movie/${movie.id}/images?api_key=${APIKEY}&limit=10`;
-          const res = await fetch(url);
-          const data = await res.json();
-          setMovieImages(data);
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchMovieImages();
-  }, [movie]);
-
   if (!movie) {
     return <div>Loading...</div>;
   }
@@ -93,17 +76,6 @@ const MovieNewDialogue: NextPage = () => {
           </div>
         )}
       </div>
-      {movieImages && movieImages.backdrops && movieImages.backdrops.length > 0 && (
-        <div className='mx-auto'>
-          <div className='flex flex-wrap'>
-            {movieImages.backdrops.map((image: any) => (
-              <div key={image.id}>
-                <img src={`https://image.tmdb.org/t/p/w100_and_h100_bestv2/${image.file_path}`} alt={title} />
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </Layout>
   );
 };
