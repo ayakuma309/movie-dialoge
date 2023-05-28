@@ -4,6 +4,7 @@ import { getAnalytics } from 'firebase/analytics'
 import 'firebase/analytics'
 import 'firebase/auth'
 import 'firebase/firestore'
+import "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 if (typeof window !== 'undefined' && getApps().length === 0) {

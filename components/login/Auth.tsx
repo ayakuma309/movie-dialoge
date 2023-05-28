@@ -1,16 +1,33 @@
 import React, { useState } from 'react'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import uuid from 'react-uuid'
 import { getAuth, createUserWithEmailAndPassword , signInWithEmailAndPassword,  GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail, updateProfile} from "firebase/auth"
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage'
+import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore'
 import DialogModal from '../common/DialogModal'
-import { TextField } from '@mui/material'
+import { Box, Grid, IconButton, TextField } from '@mui/material'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import styles from "../../styles/Auth.module.css"
 
-const Auth: React.FC = () => {
+const Auth: NextPage = () => {
   const router = useRouter()
   const auth = getAuth()
+  const storage = getStorage();
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLogin, setIsLogin] = useState(true);
   const [displayName, setDisplayName] = useState("");
+  const [avatarImage, setAvatarImage] = useState<File | null>(null);
+
+   //avatarImageにてダイアログでファイルを選択する
+  const onChangeImageHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //!はnullまたはundefinedではありませんよというもの(nullの可能性のあるものについて)
+    if (e.target.files![0]) {
+      setAvatarImage(e.target.files![0]);
+      e.target.value = "";
+    }
+  };
 
   //パスワードリセットを押したらモーダルが開く
   const [openModal, setOpenModal] = React.useState(false);
@@ -18,13 +35,42 @@ const Auth: React.FC = () => {
 
   //新規登録
   const signUpEmail = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const authUser = await createUserWithEmailAndPassword(auth, email, password)
-    await updateProfile( authUser.user , {
-      displayName: displayName
-    });
-    router.push("/")
-  }
+    e.preventDefault();
+    try {
+      const authUser = await createUserWithEmailAndPassword(auth, email, password);
+      let url = "";
+      if (avatarImage) {
+        const S = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const N = 16;
+        const randomChar = Array.from(crypto.getRandomValues(new Uint32Array(N)))
+          .map((n) => S[n % S.length])
+          .join("");
+        const fileName = randomChar + "_" + avatarImage.name;
+        const storageRef = ref(storage, `avatars/${fileName}`);
+        await uploadBytes(storageRef, avatarImage);
+        url = await getDownloadURL(storageRef);
+      }
+      await updateProfile(authUser.user, {
+        displayName: displayName,
+        photoURL: url,
+      });
+      //DB保存する
+      if (authUser.user) {
+        const db = getFirestore();
+        const userRef = doc(db, "users", authUser.user.uid); // ユーザー情報を取得
+        const userDoc = await getDoc(userRef);
+        if (!userDoc.exists()) {
+          await setDoc(userRef, {
+            id: uuid(),
+            displayName: displayName,
+          });
+        }
+      }
+      router.push("/");
+    } catch (error) {
+      console.error("Error signing up: ", error);
+    }
+  };
   //ログイン
   const signInEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -80,6 +126,27 @@ const Auth: React.FC = () => {
                 setDisplayName(e.target.value);
               }}
             />
+              <Grid container direction='column' alignItems='center'>
+                <Box>
+                  <IconButton>
+                    <label>
+                      <AccountCircleIcon
+                        fontSize="large"
+                        className={
+                          avatarImage
+                            ? styles.login_addIconLoaded
+                            : styles.login_addIcon
+                        }
+                      />
+                      <input
+                        className={styles.login_hiddenIcon}
+                        type="file"
+                        onChange={onChangeImageHandler}
+                      />
+                    </label>
+                  </IconButton>
+                </Box>
+              </Grid>
             </div>
           )}
           <div>
