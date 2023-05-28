@@ -38,9 +38,9 @@ const AllDialogue = () => {
   }, [movies]);
   return (
     <div className='dialogue'>
-      <div className="flex flex-wrap">
+      <div>
         {randomMovies &&
-        <div>
+        <div className="flex flex-wrap justify-center">
           {randomMovies.map((movie) => (
             <div key={movie.movie_id}>
               <DialogueModal
