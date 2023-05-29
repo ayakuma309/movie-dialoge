@@ -44,12 +44,3 @@ export interface DialogueProps {
   overview: string;
   tagline: string;
 }
-
-export interface movieImageProps {
-  id: number;
-  backdrops: [
-    {
-      file_path: string;
-    }
-  ];
-}

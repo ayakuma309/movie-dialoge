@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import Layout from '@/components/common/Layout';
-import { DialogueProps, movieImageProps } from '@/types/MovieTypes';
+import { DialogueProps } from '@/types/MovieTypes';
 const MovieNewDialogue: NextPage = () => {
   const db = getFirestore();
   const router = useRouter();
