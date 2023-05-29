@@ -110,11 +110,14 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
               onChange={inputDialogue}
               className="block w-full px-5 py-3 mt-2 text-base text-neutral-600 placeholder-gray-300 transition duration-500 ease-in-out transform border border-transparent rounded-lg bg-gray-50 focus:outline-none focus:border-transparent focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-300 apearance-none autoexpand"
             />
-            <button
-              className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-600 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
-            >
-              送信
-            </button>
+            {dialogue?.trim() &&
+              <button
+                type="submit"
+                className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-600 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
+              >
+                送信
+              </button>
+            }
           </form>
         </Box>
       </Modal>
