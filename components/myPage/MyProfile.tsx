@@ -1,24 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "../lib/auth";
+import { useUser } from "../../lib/auth";
 import Link from "next/link";
 import { Avatar } from "@mui/material";
 import { useRouter } from "next/router";
+import { collection, getDocs, getFirestore } from "firebase/firestore";
+import { MyProfileProps } from '../../types/ProfileTypes';
+import { NextPage } from "next";
+import MyPostMovie from "./MyPostMovie";
 
-const MyProfile: React.FC = () => {
+const MyProfile: NextPage = () => {
   const user = useUser();
   const router = useRouter();
+  const db = getFirestore();
+  const [movies, setMovies] = useState<MyProfileProps[]>([]);
+
 
   useEffect(() => {
     if (!user) {
       router.push("/");
     }
   }, [user, router]);
-   // リダイレクト中は何も表示しない
+  // リダイレクト中は何も表示しない
   if (!user) {
     return null;
   }
 
   const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const moviesCollectionRef = collection(db, 'movies');
+        const querySnapshot = await getDocs(moviesCollectionRef);
+        const movieData = querySnapshot.docs.map((doc) => {
+          const data = doc.data() as MyProfileProps;
+          return { ...data, documentId: doc.id };
+        });
+
+        // ログインしているユーザーのIDと一致する映画だけフィルタリングする
+        if (user) {
+          const filteredMovies = movieData.filter((movie) => movie.user_id === user.uid);
+          setMovies(filteredMovies);
+        }
+      } catch (error) {
+        console.error('Error fetching movies: ', error);
+      }
+    };
+
+    fetchMovies();
+  }, []);
 
   return (
     <main title="Profile-Page">
@@ -38,7 +68,7 @@ const MyProfile: React.FC = () => {
                   </div>
                 </div>
               </div>
-              <div className="-mt-3 text-center sm:mt-1">
+              <div className="mt-3 text-center sm:mt-1">
                 <Avatar
                   src={avatarSrc}
                   className="mx-auto"
@@ -47,14 +77,10 @@ const MyProfile: React.FC = () => {
                 <h3 className="text-blueGray-700 mb-2 text-4xl font-semibold leading-normal">
                   <p>{user.displayName}</p>
                 </h3>
-                <div className="text-blueGray-400 mt-0 mb-2 text-sm font-bold uppercase leading-normal">
-                  <i className="fas fa-map-marker-alt text-blueGray-400 mr-2 text-lg"></i>
-                  {user.email}
-                </div>
                 <div>
                   <Link href={`/users/${user?.uid}/edit`}>
                     <button
-                      className="rounded bg-gray-600  text-white px-4 py-4 text-xs font-bold uppercase hover:bg-white hover:text-gray-600 lg:block"
+                      className="rounded bg-gray-600 text-white px-4 py-4 text-xs font-bold hover:bg-white hover:text-gray-600"
                       type="button"
                     >
                       マイページ編集
@@ -75,10 +101,8 @@ const MyProfile: React.FC = () => {
                     </p>
                   </a>
                 </div>
-                <div className=" flex items-center justify-center">
-                  <div className="mb-8 h-80 w-80  bg-gray-500">
-                    <div className="mt-36 text-center">投稿例</div>
-                  </div>
+                <div>
+                  <MyPostMovie movies={movies} />
                 </div>
                 <Link href="/">
                   <button className=""></button>

@@ -1,6 +1,6 @@
 import Layout from "@/components/common/Layout";
 import { useUser } from "../../../lib/auth";
-import MyProfile from "@/components/MyProfile";
+import MyProfile from "@/components/myPage/MyProfile";
 
 export default function UserPage() {
   const user = useUser();
