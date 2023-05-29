@@ -1,15 +1,20 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { doc, getDoc, getFirestore } from 'firebase/firestore';
-import Layout from '@/components/common/Layout';
+import {  useEffect, useState } from 'react';
+import { addDoc, collection, doc, getDoc, getFirestore } from 'firebase/firestore';
 import { DialogueProps } from '@/types/MovieTypes';
+import Layout from '@/components/common/Layout';
+import { useUser } from '@/lib/auth';
+import { TextField } from '@mui/material';
 const MovieNewDialogue: NextPage = () => {
+  const user = useUser();
   const db = getFirestore();
   const router = useRouter();
   const { id } = router.query;
   const [movie, setMovie] = useState<any>(null); // 映画情報の状態
   const [movieDetail, setMovieDetail] = useState<DialogueProps>(); // 映画詳細情報の状態
+  // コメント一覧の状態
+  const [comment, setComment] = useState<string>("");
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -55,6 +60,25 @@ const MovieNewDialogue: NextPage = () => {
     return <div>Loading...</div>;
   }
   const { title, poster_path, dialogue} = movie;
+
+  //コメント新規投稿
+  const newComment = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!user) return;
+    try {
+      await addDoc(collection(db, 'movies', id as string, 'comments'), {
+        text: comment,
+        timestamp: Date.now(),
+        username: user.displayName,
+      });
+      setComment("");
+      console.log(comment);
+      console.log('コメントが正常に保存されました');
+    } catch (error) {
+      console.error('コメントの保存中にエラーが発生しました:', error);
+    }
+  };
+
   return (
     <Layout title={title}>
       <div className='container mx-auto mt-8 pb-16 text-black sm:max-w-xl md:max-w-2xl lg:max-w-4xl'>
@@ -68,7 +92,7 @@ const MovieNewDialogue: NextPage = () => {
         </div>
         <h1 className='text-2xl mt-5 mb-5 font-bold'>「{dialogue}」</h1>
         {movieDetail && movieDetail.genres && (
-          <div className='mx-auto'>
+          <div className='w-9/12 mx-auto'>
             <div className='flex flex-wrap mb-7'>
               {movieDetail.genres.map((genre: { name: string; id: string }) => (
                 <p
@@ -83,6 +107,27 @@ const MovieNewDialogue: NextPage = () => {
             <p className='text-xl'>{movieDetail.tagline}</p>
           </div>
         )}
+      </div>
+      <div className='mb-5 flex justify-center'>
+        <form onSubmit={newComment}>
+          <div>
+            <TextField
+              type="text"
+              placeholder="Type new comment..."
+              value={comment}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setComment(e.target.value)
+              }
+            />
+            <button
+              disabled={!comment}
+              type="submit"
+              className='disabled:opacity-50 bg-blue-900 text-white py-2 px-4 rounded-md'
+            >
+              コメントする
+            </button>
+          </div>
+        </form>
       </div>
     </Layout>
   );

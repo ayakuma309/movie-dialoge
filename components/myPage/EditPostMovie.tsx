@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import { EditPostMovieProps } from '../../types/ProfileTypes';
 import { Button, Typography } from '@mui/material';
 import { deleteDoc, doc, getFirestore, updateDoc} from 'firebase/firestore';
+import Link from 'next/link';
 
 const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
   const { documentId, title,  poster_path,onDelete } = props;
@@ -70,6 +71,11 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
           <Typography id="modal-modal-description" sx={{ mt: 2 ,mb:2}}>
             {editedDialogue}
           </Typography>
+          <Link href={`/movie/${documentId}/movieDetail`}>
+            <Button size="small">
+              詳細
+            </Button>
+          </Link>
           <Button size="small" onClick={editPost}>
             編集
           </Button>
