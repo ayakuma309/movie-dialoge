@@ -1,9 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../lib/auth";
 import Link from "next/link";
+import { Avatar } from "@mui/material";
+import { useRouter } from "next/router";
 
 const MyProfile: React.FC = () => {
   const user = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+  }, [user, router]);
+   // リダイレクト中は何も表示しない
+  if (!user) {
+    return null;
+  }
+
+  const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
+
   return (
     <main title="Profile-Page">
       <section className="relative py-10">
@@ -23,12 +39,17 @@ const MyProfile: React.FC = () => {
                 </div>
               </div>
               <div className="-mt-3 text-center sm:mt-1">
+                <Avatar
+                  src={avatarSrc}
+                  className="mx-auto"
+                  sx={{ width: 100, height: 100 }}
+                />
                 <h3 className="text-blueGray-700 mb-2 text-4xl font-semibold leading-normal">
-                  <p>{user?.displayName}</p>
+                  <p>{user.displayName}</p>
                 </h3>
                 <div className="text-blueGray-400 mt-0 mb-2 text-sm font-bold uppercase leading-normal">
                   <i className="fas fa-map-marker-alt text-blueGray-400 mr-2 text-lg"></i>
-                  {user?.email}
+                  {user.email}
                 </div>
                 <div>
                   <Link href={`/users/${user?.uid}/edit`}>
@@ -55,7 +76,7 @@ const MyProfile: React.FC = () => {
                   </a>
                 </div>
                 <div className=" flex items-center justify-center">
-                  <div className="mb-8 h-80 w-full max-w-sm bg-gray-500">
+                  <div className="mb-8 h-80 w-80  bg-gray-500">
                     <div className="mt-36 text-center">投稿例</div>
                   </div>
                 </div>
