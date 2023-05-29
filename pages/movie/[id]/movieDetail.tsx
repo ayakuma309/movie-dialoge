@@ -58,17 +58,25 @@ const MovieNewDialogue: NextPage = () => {
   return (
     <Layout title={title}>
       <div className='container mx-auto mt-8 pb-16 text-black sm:max-w-xl md:max-w-2xl lg:max-w-4xl'>
-        <h1>{title}</h1>
-        <img
-          src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
-          alt={title + ' poster'}
-        />
-        <h1 className='text-2xl'>{dialogue}</h1>
+        <h1 className='my-5 text-2xl font-bold'>{title}</h1>
+        <div className='text-center card'>
+          <img
+            src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
+            alt={title + ' poster'}
+            className='mx-auto'
+            />
+        </div>
+        <h1 className='text-2xl mt-5 mb-5 font-bold'>「{dialogue}」</h1>
         {movieDetail && movieDetail.genres && (
           <div className='mx-auto'>
-            <div className='flex flex-wrap'>
+            <div className='flex flex-wrap mb-7'>
               {movieDetail.genres.map((genre: { name: string; id: string }) => (
-                <p key={genre.id}>{genre.name}</p>
+                <p
+                  key={genre.id}
+                  className="[word-wrap: break-word] my-[5px] mr-4 flex h-[32px] cursor-pointer items-center justify-between rounded-[16px] bg-[#eceff1] px-[12px] py-0 text-[13px] font-normal normal-case leading-loose text-[#4f4f4f] shadow-none transition-[opacity] duration-300 ease-linear hover:!shadow-none active:bg-[#cacfd1] dark:bg-neutral-600 dark:text-neutral-200"
+                >
+                  {genre.name}
+                </p>
               ))}
             </div>
             <p>{movieDetail.overview}</p>
