@@ -1,5 +1,5 @@
-//myProfile.tsx
-export interface MyProfileProps {
+//MyPostMovie.tsx
+export interface MyPostMovieProps {
   documentId: string;
   movie_id: string;
   id: number;
@@ -8,10 +8,6 @@ export interface MyProfileProps {
   poster_path: string;
   user_id: string;
 }
-//MyPostMovie.tsx
-export interface MyPostMovieProps {
-  movies:  MyProfileProps[];
-}
 
 //EditPostMovie.tsx
 export interface EditPostMovieProps {
@@ -19,4 +15,5 @@ export interface EditPostMovieProps {
   title: string;
   dialogue: string;
   poster_path: string;
+  onDelete: (documentId: string) => void;
 }

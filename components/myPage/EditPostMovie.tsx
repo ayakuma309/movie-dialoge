@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { NextPage } from 'next';
 import { EditPostMovieProps } from '../../types/ProfileTypes';
 import { Button, Typography } from '@mui/material';
-import { doc, getFirestore, updateDoc } from 'firebase/firestore';
+import { deleteDoc, doc, getFirestore, updateDoc} from 'firebase/firestore';
 
 const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
-  const { documentId, title,  poster_path } = props;
+  const { documentId, title,  poster_path,onDelete } = props;
   const [editedDialogue, setEditedDialogue] = useState(props.dialogue);
   const [isEditing, setIsEditing] = useState(false);
   const db = getFirestore();
@@ -32,6 +32,19 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
         alert('Errorが発生しました');
       });
   };
+  const deletePost = () => {
+    if (window.confirm('削除してもよろしいですか')) {
+      deleteDoc(doc(db, 'movies', documentId))
+        .then(() => {
+          console.log('削除しました');
+          onDelete(documentId);
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    }
+  }
+
   return (
     <div className='my-5 '>
       <Typography id="modal-modal-title" variant="h6" component="h2">
@@ -59,6 +72,9 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
           </Typography>
           <Button size="small" onClick={editPost}>
             編集
+          </Button>
+          <Button size="small" onClick={deletePost}>
+            削除
           </Button>
         </>
       )}

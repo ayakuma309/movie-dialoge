@@ -3,17 +3,12 @@ import { useUser } from "../../lib/auth";
 import Link from "next/link";
 import { Avatar } from "@mui/material";
 import { useRouter } from "next/router";
-import { collection, getDocs, getFirestore } from "firebase/firestore";
-import { MyProfileProps } from '../../types/ProfileTypes';
 import { NextPage } from "next";
 import MyPostMovie from "./MyPostMovie";
 
 const MyProfile: NextPage = () => {
   const user = useUser();
   const router = useRouter();
-  const db = getFirestore();
-  const [movies, setMovies] = useState<MyProfileProps[]>([]);
-
 
   useEffect(() => {
     if (!user) {
@@ -26,29 +21,6 @@ const MyProfile: NextPage = () => {
   }
 
   const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      try {
-        const moviesCollectionRef = collection(db, 'movies');
-        const querySnapshot = await getDocs(moviesCollectionRef);
-        const movieData = querySnapshot.docs.map((doc) => {
-          const data = doc.data() as MyProfileProps;
-          return { ...data, documentId: doc.id };
-        });
-
-        // ログインしているユーザーのIDと一致する映画だけフィルタリングする
-        if (user) {
-          const filteredMovies = movieData.filter((movie) => movie.user_id === user.uid);
-          setMovies(filteredMovies);
-        }
-      } catch (error) {
-        console.error('Error fetching movies: ', error);
-      }
-    };
-
-    fetchMovies();
-  }, []);
 
   return (
     <main title="Profile-Page">
@@ -102,7 +74,7 @@ const MyProfile: NextPage = () => {
                   </a>
                 </div>
                 <div>
-                  <MyPostMovie movies={movies} />
+                  <MyPostMovie />
                 </div>
                 <Link href="/">
                   <button className=""></button>
