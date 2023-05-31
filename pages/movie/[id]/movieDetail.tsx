@@ -1,8 +1,9 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {  useEffect, useState } from 'react';
-import { addDoc, collection, doc, getDoc, getFirestore } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { DialogueProps } from '@/types/MovieTypes';
+import { CommentTypeProps } from '@/types/CommentTypes';
 import Layout from '@/components/common/Layout';
 import { useUser } from '@/lib/auth';
 import { TextField } from '@mui/material';
@@ -15,6 +16,9 @@ const MovieNewDialogue: NextPage = () => {
   const [movieDetail, setMovieDetail] = useState<DialogueProps>(); // 映画詳細情報の状態
   // コメント一覧の状態
   const [comment, setComment] = useState<string>("");
+  const [comments, setComments] = useState<CommentTypeProps[]>([]);
+
+  const APIKEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
 
   useEffect(() => {
     const fetchMovie = async () => {
@@ -34,16 +38,10 @@ const MovieNewDialogue: NextPage = () => {
       }
     };
 
-    fetchMovie();
-  }, [id]);
-
-  const APIKEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
-
-  //firebaseのデータ取得後にmovie.idを使いdetailのAPIで取得
-  useEffect(() => {
+    //firebaseのデータ取得後にmovie.idを使いdetailのAPIで取得
     const fetchMovieDetail = async () => {
       try {
-        if(movie && movie.id){
+        if (movie && movie.id) {
           const url = `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${APIKEY}&language=ja`;
           const res = await fetch(url);
           const data = await res.json();
@@ -53,8 +51,32 @@ const MovieNewDialogue: NextPage = () => {
         console.error(error);
       }
     };
-    fetchMovieDetail();
-  }, [movie]);
+
+    const fetchData = async () => {
+      await Promise.all([fetchMovie(), fetchMovieDetail()]);
+
+      const unsubscribe = onSnapshot(
+        query(collection(db, 'movies', id as string, 'comments'), orderBy('timestamp', 'desc')),
+        (snapshot) => {
+          setComments(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              text: doc.data().text,
+              username: doc.data().username,
+              timestamp: doc.data().timestamp,
+            }))
+          );
+        }
+      );
+
+      return () => {
+        unsubscribe();
+      };
+    };
+
+    fetchData();
+  }, [movie, id]);
+
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -78,6 +100,7 @@ const MovieNewDialogue: NextPage = () => {
       console.error('コメントの保存中にエラーが発生しました:', error);
     }
   };
+
 
   return (
     <Layout title={title}>
@@ -128,6 +151,12 @@ const MovieNewDialogue: NextPage = () => {
             </button>
           </div>
         </form>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <p>{comment.text}</p>
+            <p>{comment.username}</p>
+          </div>
+        ))}
       </div>
     </Layout>
   );
