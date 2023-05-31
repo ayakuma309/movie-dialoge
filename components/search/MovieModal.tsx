@@ -58,7 +58,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           user_id: user.uid,
           dialogue: dialogue,
         });
-        router.push(`/movie/${docRef.id}/movieDetail`);
+        router.push(`/`);
       } else {
         // ユーザーがログインしていない場合の処理
         console.log('User is not logged in');
