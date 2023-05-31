@@ -20,7 +20,7 @@ const Header: React.FC = () => {
       <div className="mx-auto md:mx-20 xl:mx-44">
         <div className="relative flex h-16 items-center justify-around sm:justify-between">
           <Link href="/">
-            <div className="block h-7 w-auto ">セリフから選ぶ映画</div>
+            <div className="block h-7 w-auto ">ScriptSelectMovies</div>
           </Link>
           {user !== null ? (
             <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-1">

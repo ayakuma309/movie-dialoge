@@ -7,6 +7,7 @@ import { Box, Modal, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useUser } from '@/lib/auth';
+import { TwitterIcon, TwitterShareButton } from 'react-share';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -108,6 +109,15 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <small className='text-gray-500'>{title}</small>
             </Typography>
+            <div>
+              <TwitterShareButton
+                url={`https://movie-dialoge.vercel.app/`}
+                title={`${dialogue} by${title}`}
+                hashtags={['ScriptSelectMovies']}
+              >
+                <TwitterIcon size={40} round />
+              </TwitterShareButton>
+            </div>
             {user !== null && (
               <>
                 <Link href={`/movie/${documentId}/movieDetail`}>

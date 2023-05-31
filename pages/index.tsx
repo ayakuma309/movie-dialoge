@@ -7,7 +7,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 const Home: NextPage = () => {
   const user = useUser();
   return (
-    <Layout title="セリフから選ぶ映画">
+    <Layout title="ScriptSelectMovies">
       <div className="movie-dialogue">
         <div>
           <>
