@@ -1,8 +1,12 @@
 import { NextPage } from 'next';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DialogueModalProps } from '@/types/MovieTypes';
 import { Box, Modal, Typography } from '@mui/material';
 import Link from 'next/link';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useUser } from '@/lib/auth';
+import { deleteDoc, doc, getFirestore, onSnapshot, setDoc } from 'firebase/firestore';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -26,10 +30,45 @@ const style = {
 const DialogueModal: NextPage<DialogueModalProps> = (props) => {
   const { documentId,title, dialogue, poster_path } = props;
   const [open, setOpen] = useState(false);
-
+  const user = useUser();
+  const db = getFirestore();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  //いいねを保存
+  const handleLikeSave = () => {
+    if (!user) return;
+    setDoc(doc(db, 'posts', documentId, 'likes', user.uid), {
+      username: user.displayName,
+    });
+    setIsLiked(true);
+  };
+
+  const handleUnlikeSave = () => {
+    if (!user) return;
+    deleteDoc(doc(db, 'posts', documentId, 'likes', user.uid));
+    setIsLiked(false);
+  };
+
+  // いいね済みかどうかを判定するためのuseState
+  const [isLiked, setIsLiked] = useState(false);
+
+  // いいね済みかどうかを判定するuseEffect
+  useEffect(() => {
+    if (user) {
+      const unsubscribe = onSnapshot(
+        doc(db, 'posts', documentId, 'likes', user.uid),
+        (snapshot) => {
+          if (snapshot.exists()) {
+            setIsLiked(true);
+          } else {
+            setIsLiked(false);
+          }
+        }
+      );
+      return () => unsubscribe();
+    }
+  }, [documentId, user]);
   return (
     <div>
       <button onClick={handleOpen}>
@@ -76,6 +115,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
                 詳しく見る
               </button>
             </Link>
+            {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
           </div>
         </Box>
       </Modal>
