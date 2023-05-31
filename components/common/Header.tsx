@@ -16,7 +16,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <nav className="fixed left-0 z-50 block w-full  bg-opacity-95 shadow-2xl">
+    <nav className="fixed left-0 z-50 block w-full  shadow-2xl bg-white">
       <div className="mx-auto md:mx-20 xl:mx-44">
         <div className="relative flex h-16 items-center justify-around sm:justify-between">
           <Link href="/">
