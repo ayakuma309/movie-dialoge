@@ -83,9 +83,6 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
               <p className="description">
                 {dialogue}
               </p>
-              <p className="title text-gray-600 mt-3">
-                <small>{title}より</small>
-              </p>
             </div>
           </div>
         </div>
