@@ -2,7 +2,6 @@ import { NextPage } from "next";
 import { useUser } from "../lib/auth";
 import Layout from "../components/common/Layout";
 import AllDialogue from "@/components/dialogue/AllDialogue";
-import Auth from "@/components/login/Auth";
 import Link from "next/link";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 const Home: NextPage = () => {
