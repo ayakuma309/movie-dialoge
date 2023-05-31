@@ -1,12 +1,12 @@
 import { NextPage } from 'next';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import { deleteDoc, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import { DialogueModalProps } from '@/types/MovieTypes';
 import { Box, Modal, Typography } from '@mui/material';
-import Link from 'next/link';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useUser } from '@/lib/auth';
-import { deleteDoc, doc, getFirestore, onSnapshot, setDoc } from 'firebase/firestore';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -55,19 +55,20 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
 
   // いいね済みかどうかを判定するuseEffect
   useEffect(() => {
-    if (user) {
-      const unsubscribe = onSnapshot(
-        doc(db, 'posts', documentId, 'likes', user.uid),
-        (snapshot) => {
-          if (snapshot.exists()) {
-            setIsLiked(true);
-          } else {
-            setIsLiked(false);
-          }
+    const checkIfLiked = async () => {
+      try {
+        if (user) {
+          const docRef = doc(db, 'posts', documentId, 'likes', user.uid);
+          const docSnap = await getDoc(docRef);
+          const isLiked = docSnap.exists();
+          setIsLiked(isLiked);
         }
-      );
-      return () => unsubscribe();
-    }
+      } catch (error) {
+        console.error('Error checking like status: ', error);
+      }
+    };
+
+    checkIfLiked();
   }, [documentId, user]);
   return (
     <div>
@@ -115,7 +116,9 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
                 詳しく見る
               </button>
             </Link>
-            {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+            <div className="flex justify-center">
+              {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+            </div>
           </div>
         </Box>
       </Modal>

@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {  useEffect, useState } from 'react';
-import { addDoc, collection, doc, getDoc, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { DialogueProps } from '@/types/MovieTypes';
 import { CommentTypeProps } from '@/types/CommentTypes';
 import Layout from '@/components/common/Layout';
@@ -22,7 +22,7 @@ const MovieNewDialogue: NextPage = () => {
   const APIKEY = process.env.NEXT_PUBLIC_MOVIE_API_KEY;
 
   useEffect(() => {
-    const fetchMovie = async () => {
+    const fetchData = async () => {
       try {
         if (id) {
           const docRef = doc(db, 'movies', id as string);
@@ -37,10 +37,7 @@ const MovieNewDialogue: NextPage = () => {
       } catch (error) {
         console.error('Error fetching movie: ', error);
       }
-    };
 
-    //firebaseのデータ取得後にmovie.idを使いdetailのAPIで取得
-    const fetchMovieDetail = async () => {
       try {
         if (movie && movie.id) {
           const url = `https://api.themoviedb.org/3/movie/${movie.id}?api_key=${APIKEY}&language=ja`;
@@ -51,33 +48,30 @@ const MovieNewDialogue: NextPage = () => {
       } catch (error) {
         console.error(error);
       }
-    };
 
-    const fetchData = async () => {
-      await Promise.all([fetchMovie(), fetchMovieDetail()]);
+      try {
+        if (id) {
+          const commentsRef = collection(db, 'movies', id as string, 'comments');
+          const commentsSnapshot = await getDocs(query(commentsRef, orderBy('timestamp', 'desc')));
 
-      const unsubscribe = onSnapshot(
-        query(collection(db, 'movies', id as string, 'comments'), orderBy('timestamp', 'desc')),
-        (snapshot) => {
-          setComments(
-            snapshot.docs.map((doc) => ({
-              id: doc.id,
-              text: doc.data().text,
-              avatar: doc.data().avatar,
-              username: doc.data().username,
-              timestamp: doc.data().timestamp,
-            }))
-          );
+          const commentsData = commentsSnapshot.docs.map((doc) => ({
+            id: doc.id,
+            text: doc.data().text,
+            avatar: doc.data().avatar,
+            username: doc.data().username,
+            timestamp: doc.data().timestamp,
+          }));
+
+          setComments(commentsData);
         }
-      );
-
-      return () => {
-        unsubscribe();
-      };
+      } catch (error) {
+        console.error('Error fetching comments: ', error);
+      }
     };
 
     fetchData();
-  }, [movie, id]);
+  }, []);
+
 
 
   if (!movie) {
