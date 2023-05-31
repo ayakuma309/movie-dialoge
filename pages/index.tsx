@@ -10,22 +10,18 @@ const Home: NextPage = () => {
     <Layout title="セリフから選ぶ映画">
       <div className="movie-dialogue">
         <div>
-          {user !== null ? (
-            <>
-              <div className="flex items-center justify-center">
+          <>
+            <div className="flex items-center justify-center">
+              {user !== null && (
                 <Link href="/search">
                   <button className="btn btn-primary">
                     <AddCircleIcon />
                   </button>
                 </Link>
-              </div>
-              <AllDialogue />
-            </>
-          ) : (
-            <>
-              <p>ログインしてない</p>
-            </>
-          )}
+              )}
+            </div>
+            <AllDialogue />
+          </>
         </div>
       </div>
     </Layout>

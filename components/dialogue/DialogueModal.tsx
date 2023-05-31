@@ -111,14 +111,18 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <small className='text-gray-500'>{title}</small>
             </Typography>
-            <Link href={`/movie/${documentId}/movieDetail`}>
-              <button className='btn btn-primary'>
-                詳しく見る
-              </button>
-            </Link>
-            <div className="flex justify-center">
-              {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
-            </div>
+            {user !== null && (
+              <>
+                <Link href={`/movie/${documentId}/movieDetail`}>
+                  <button className='btn btn-primary'>
+                    詳しく見る
+                  </button>
+                </Link>
+                <div className="flex justify-center">
+                  {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+                </div>
+              </>
+            )}
           </div>
         </Box>
       </Modal>
