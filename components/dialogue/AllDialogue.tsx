@@ -6,7 +6,6 @@ import DialogueModal from './DialogueModal';
 
 const AllDialogue = () => {
   const [movies, setMovies] = useState<AllDialogueProps[]>([]);
-  const [randomMovies, setRandomMovies] = useState<AllDialogueProps[]>([]);
   const db = getFirestore();
 
   useEffect(() => {
@@ -26,22 +25,12 @@ const AllDialogue = () => {
     fetchMovies();
   }, []);
 
-  useEffect(() => {
-    if (movies.length > 0) {
-      const shuffledmovies = [...movies];
-      for (let i = shuffledmovies.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledmovies[i], shuffledmovies[j]] = [shuffledmovies[j], shuffledmovies[i]];
-      }
-      setRandomMovies(shuffledmovies);
-    }
-  }, [movies]);
   return (
     <div className='dialogue'>
       <div>
-        {randomMovies &&
+        {movies &&
         <div className="flex flex-wrap justify-center">
-          {randomMovies.map((movie) => (
+          {movies.map((movie) => (
             <div key={movie.movie_id}>
               <DialogueModal
                 documentId={movie.documentId}
