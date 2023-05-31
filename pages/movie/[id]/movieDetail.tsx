@@ -7,6 +7,7 @@ import { CommentTypeProps } from '@/types/CommentTypes';
 import Layout from '@/components/common/Layout';
 import { useUser } from '@/lib/auth';
 import { TextField } from '@mui/material';
+import MovieComments from '@/components/movieDetail/MovieComments';
 const MovieNewDialogue: NextPage = () => {
   const user = useUser();
   const db = getFirestore();
@@ -62,6 +63,7 @@ const MovieNewDialogue: NextPage = () => {
             snapshot.docs.map((doc) => ({
               id: doc.id,
               text: doc.data().text,
+              avatar: doc.data().avatar,
               username: doc.data().username,
               timestamp: doc.data().timestamp,
             }))
@@ -151,12 +153,7 @@ const MovieNewDialogue: NextPage = () => {
             </button>
           </div>
         </form>
-        {comments.map((comment) => (
-          <div key={comment.id}>
-            <p>{comment.text}</p>
-            <p>{comment.username}</p>
-          </div>
-        ))}
+        <MovieComments comments={comments} />
       </div>
     </Layout>
   );
