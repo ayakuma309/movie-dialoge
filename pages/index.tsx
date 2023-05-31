@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             </>
           ) : (
             <>
-              <Auth />
+              <p>ログインしてない</p>
             </>
           )}
         </div>
