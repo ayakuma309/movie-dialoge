@@ -28,18 +28,6 @@ const MyProfile: NextPage = () => {
         <div className="container mx-auto max-w-5xl px-4">
           <div className="relative flex w-full min-w-0 flex-col break-words rounded-lg  shadow-xl">
             <div className="px-6">
-              <div className="flex flex-wrap justify-center">
-                <div className="w-full px-4 lg:order-1 lg:w-4/12 lg:pt-14">
-                  <div className="flex justify-center py-4 pt-2 lg:pt-4">
-                    <div className="mr-4 p-3 text-center">
-                      <span className="text-blueGray-600 block text-xl font-bold uppercase tracking-wide">
-                        22
-                      </span>
-                      <span className="text-blueGray-400 text-xs">投稿数</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
               <div className="mt-3 text-center sm:mt-1">
                 <Avatar
                   src={avatarSrc}
