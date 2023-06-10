@@ -1,10 +1,19 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import MovieItem from "../components/search/MovieItem";
 import { MovieInfo } from '../types/MovieTypes';
 import { NextPage } from 'next';
 import Layout from '@/components/common/Layout';
+import { useUser } from '@/lib/auth';
+import LoginForm from './loginForm';
 
 const SearchMovie: NextPage = () => {
+    const user = useUser();
+    if (!user) {
+        return (
+            <LoginForm />
+        );
+    }
+    
     const [query, setQuery] = useState<string>('');
     const [movies, setMovies] = useState<MovieInfo[]>([]);
 
