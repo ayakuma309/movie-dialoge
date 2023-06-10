@@ -40,7 +40,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
   //いいねを保存
   const handleLikeSave = () => {
     if (!user) return;
-    setDoc(doc(db, 'posts', documentId, 'likes', user.uid), {
+    setDoc(doc(db, 'movies', documentId, 'likes', user.uid), {
       username: user.displayName,
     });
     setIsLiked(true);
@@ -48,7 +48,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
 
   const handleUnlikeSave = () => {
     if (!user) return;
-    deleteDoc(doc(db, 'posts', documentId, 'likes', user.uid));
+    deleteDoc(doc(db, 'movies', documentId, 'likes', user.uid));
     setIsLiked(false);
   };
 
@@ -60,7 +60,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
     const checkIfLiked = async () => {
       try {
         if (user) {
-          const docRef = doc(db, 'posts', documentId, 'likes', user.uid);
+          const docRef = doc(db, 'movies', documentId, 'likes', user.uid);
           const docSnap = await getDoc(docRef);
           const isLiked = docSnap.exists();
           setIsLiked(isLiked);
