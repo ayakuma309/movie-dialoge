@@ -49,7 +49,7 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
   return (
     <div className='my-5 '>
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        <small className='text-gray-500'>{title}</small>
+        <small className='text-white'>{title}</small>
       </Typography>
       <img
         src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
@@ -68,7 +68,9 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
         </div>
       ) : (
         <>
-          <Typography id="modal-modal-description" sx={{ mt: 2 ,mb:2}}>
+          <Typography
+          className='text-white'
+          id="modal-modal-description" sx={{ mt: 2 ,mb:2}}>
             {editedDialogue}
           </Typography>
           <Link href={`/movie/${documentId}/movieDetail`}>
