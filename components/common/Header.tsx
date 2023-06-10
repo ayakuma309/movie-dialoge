@@ -25,8 +25,7 @@ const Header: React.FC = () => {
           {user !== null ? (
             <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-1">
               <div className="relative z-30 ml-3 mr-10 md:mr-0">
-                <button
-                  type="button"
+                <div
                   className="flex rounded-full text-sm text-gray-800 hover:opacity-70 focus:outline-none"
                   id="user-menu"
                   aria-expanded="false"
@@ -55,7 +54,7 @@ const Header: React.FC = () => {
                       ></path>
                     </svg>
                   )}
-                </button>
+                </div>
                 {menuOpen ? (
                   <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-gray-100 px-2 py-1 shadow-lg focus:outline-none">
                     <Link href={`/users/${user?.uid}`}>

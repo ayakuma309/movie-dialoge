@@ -13,7 +13,7 @@ const SearchMovie: NextPage = () => {
             <LoginForm />
         );
     }
-    
+
     const [query, setQuery] = useState<string>('');
     const [movies, setMovies] = useState<MovieInfo[]>([]);
 
@@ -25,7 +25,6 @@ const SearchMovie: NextPage = () => {
         try {
             const res = await fetch(url);
             const data = await res.json();
-            console.log(data.results);
             setMovies(data.results);
         } catch (err) {
             console.error(err);
