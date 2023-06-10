@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useUser } from "../../lib/auth";
 import Link from "next/link";
 import { Avatar } from "@mui/material";
@@ -63,8 +63,8 @@ const MyProfile: NextPage = () => {
                   </a>
                 </div>
                 <div>
-                  <MyPostMovie />
                   <FavoriteMovie />
+                  <MyPostMovie />
                 </div>
                 <Link href="/">
                   <button className=""></button>
