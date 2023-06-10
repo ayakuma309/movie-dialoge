@@ -16,11 +16,11 @@ const Header: React.FC = () => {
   };
 
   return (
-    <nav className="fixed left-0 z-50 block w-full  shadow-2xl bg-white">
+    <nav className="fixed left-0 z-50 block w-full shadow-2xl text-black bg-white">
       <div className="mx-auto md:mx-20 xl:mx-44">
         <div className="relative flex h-16 items-center justify-around sm:justify-between">
           <Link href="/">
-            <div className="block h-7 w-auto ">ScriptSelectMovies</div>
+            <div className="block h-7 w-auto">ScriptSelectMovies</div>
           </Link>
           {user !== null ? (
             <div className="absolute inset-y-0 right-0 flex items-center sm:static sm:inset-auto sm:ml-6 sm:pr-1">
@@ -33,20 +33,28 @@ const Header: React.FC = () => {
                   aria-haspopup="true"
                   onClick={handleMenuOpenClick}
                 >
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-                    ></path>
-                  </svg>
+                  {user.photoURL ? (
+                    <img
+                      className="h-10 w-10 rounded-full"
+                      src={user.photoURL}
+                      alt="avatar"
+                    />
+                  ): (
+                    <svg
+                      className="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                      ></path>
+                    </svg>
+                  )}
                 </button>
                 {menuOpen ? (
                   <div className="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-gray-100 px-2 py-1 shadow-lg focus:outline-none">

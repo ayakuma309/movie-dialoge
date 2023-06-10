@@ -8,7 +8,7 @@ type MyComponentProps = {
 //Layoutコンポーネントの作成。全体のlayout。引数にchildren, title
 const Layout: React.FC<MyComponentProps> = ({
   children,
-  title = 'セリフから選ぶ映画',
+  title = 'ScriptSelectMovies',
 }) => {
   return (
     <div className='mx-auto flex min-h-screen flex-col items-center justify-center'>
