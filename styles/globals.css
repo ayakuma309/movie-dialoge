@@ -4,10 +4,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap');
 
-.bg-Color{
-  background: linear-gradient(135deg, #e1e2e4, #bbccf5, #90a3fa);
+body{
+  background-image: url('../public/film.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
+.bg-Color{
+  background-image: -webkit-radial-gradient(27% 185%, #F9F6F1 0%, #D7D0C5 100%);
+  background-image: radial-gradient(27% 185%, #F9F6F1 0%, #D7D0C5 100%);
+}
 
 .movie-dialogue{
   height: 100%;
@@ -24,6 +30,27 @@
 }
 
 .container .card {
+  margin: 0 1rem 2rem;
+  padding: 2.2rem 2.5rem;
+  width: 300px;
+  height: 225px;
+  overflow: scroll;
+  background: #f8f4f3;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  position: relative;
+  cursor: pointer;
+  box-shadow: 0px 0px 25px 2px #777777;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('../public/filmcard.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.container .card_movie {
   margin: 0 1rem 2rem;
   padding: 2.2rem 2.5rem;
   width: 300px;

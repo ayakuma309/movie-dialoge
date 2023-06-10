@@ -87,8 +87,8 @@ const MovieNewDialogue: NextPage = () => {
 
   return (
     <Layout title={title}>
-      <div className='container mx-auto mt-8 pb-16 text-black sm:max-w-xl md:max-w-2xl lg:max-w-4xl'>
-        <h1 className='my-5 text-2xl font-bold'>{title}</h1>
+      <div className='container mx-auto mt-8 pb-16 text-white sm:max-w-xl md:max-w-2xl lg:max-w-4xl'>
+        <h1 className='my-5 text-3xl font-bold'>{title}</h1>
         <div className='text-center card'>
           <img
             src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
@@ -105,6 +105,7 @@ const MovieNewDialogue: NextPage = () => {
               type="text"
               placeholder="Type new comment..."
               value={comment}
+              className='bg-white rounded-md'
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setComment(e.target.value)
               }
@@ -112,7 +113,7 @@ const MovieNewDialogue: NextPage = () => {
             <button
               disabled={!comment}
               type="submit"
-              className='disabled:opacity-50 bg-blue-900 text-white py-2 px-4 rounded-md'
+              className='disabled:opacity-50 bg-white text-black py-4 px-2 ml-2 rounded-md'
             >
               コメントする
             </button>

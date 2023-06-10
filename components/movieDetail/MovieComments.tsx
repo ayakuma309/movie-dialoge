@@ -7,9 +7,9 @@ const MovieComments:NextPage<CommentsTypeProps> = ({ comments }) => {
       {comments && (
         <div>
           <div>
-            <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div className="max-w-md p-8 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700 mb-5" style={{width: '400px'}}>
               <div className="flex items-center justify-between mb-4 text-center">
-                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Comments</h5>
+                <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white mx-auto">Comments</h5>
               </div>
               {comments.map((comment) => (
                 <div className="flow-root" key={comment.id}>
