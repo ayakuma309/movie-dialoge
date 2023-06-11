@@ -22,7 +22,7 @@ const MyProfile: NextPage = () => {
     return null;
   }
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = (tab:string) => {
     setActiveTab(tab);
   };
   const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
