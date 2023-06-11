@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { MovieItemProps } from '../../types/MovieTypes';
 import MovieModal from './MovieModal';
 import { NextPage } from 'next';
