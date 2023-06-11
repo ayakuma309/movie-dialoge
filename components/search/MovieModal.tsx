@@ -50,9 +50,9 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
     try {
       const user = auth.currentUser;
       if (user) {
-        const docRef = await addDoc(collection(db, 'movies'), {
+        await addDoc(collection(db, 'movies'), {
           movie_id: uuid(),
-          id,
+          id, //tmdbのid
           title,
           poster_path,
           user_id: user.uid,

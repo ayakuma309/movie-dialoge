@@ -1,12 +1,13 @@
+import React, { useEffect, useState } from 'react'
 import { NextPage } from 'next';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import { TwitterIcon, TwitterShareButton } from 'react-share';
 import { deleteDoc, doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
+import { useUser } from '@/lib/auth';
 import { DialogueModalProps } from '@/types/MovieTypes';
 import { Box, Modal, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { useUser } from '@/lib/auth';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -38,7 +39,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
   //いいねを保存
   const handleLikeSave = () => {
     if (!user) return;
-    setDoc(doc(db, 'posts', documentId, 'likes', user.uid), {
+    setDoc(doc(db, 'movies', documentId, 'likes', user.uid), {
       username: user.displayName,
     });
     setIsLiked(true);
@@ -46,7 +47,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
 
   const handleUnlikeSave = () => {
     if (!user) return;
-    deleteDoc(doc(db, 'posts', documentId, 'likes', user.uid));
+    deleteDoc(doc(db, 'movies', documentId, 'likes', user.uid));
     setIsLiked(false);
   };
 
@@ -58,7 +59,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
     const checkIfLiked = async () => {
       try {
         if (user) {
-          const docRef = doc(db, 'posts', documentId, 'likes', user.uid);
+          const docRef = doc(db, 'movies', documentId, 'likes', user.uid);
           const docSnap = await getDoc(docRef);
           const isLiked = docSnap.exists();
           setIsLiked(isLiked);
@@ -108,17 +109,27 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             <Typography id="modal-modal-title" variant="h6" component="h2">
               <small className='text-gray-500'>{title}</small>
             </Typography>
+            <div>
+              <TwitterShareButton
+                url={`https://movie-dialoge.vercel.app/`}
+                title={`${dialogue} by${title}`}
+                hashtags={['ScriptSelectMovies']}
+              >
+                <TwitterIcon size={40} round />
+              </TwitterShareButton>
+            </div>
             {user !== null && (
-              <>
+              <div className='flex justify-center my-3'>
                 <Link href={`/movie/${documentId}/movieDetail`}>
-                  <button className='btn btn-primary'>
-                    詳しく見る
+                  <button className='px-1 py-1 bg-gray-500 text-white rounded-md mr-2'>
+                    詳細
                   </button>
                 </Link>
                 <div className="flex justify-center">
-                  {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+                  {isLiked ?
+                    <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
                 </div>
-              </>
+              </div>
             )}
           </div>
         </Box>
