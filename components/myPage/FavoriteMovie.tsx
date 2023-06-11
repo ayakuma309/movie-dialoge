@@ -1,5 +1,5 @@
 import { useUser } from '@/lib/auth';
-import { collection, query, where, getDocs, getFirestore } from 'firebase/firestore';
+import { collection,  getDocs, getFirestore } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 
 interface MovieProps {
@@ -62,9 +62,9 @@ const FavoriteMovie = () => {
   }, []);
 
   return (
-    <div>
+    <div className='container'>
       {moviesWithLikes.map((movie) => (
-        <div className="mx-auto text-white" key={movie.id}>
+        <div className="mx-auto text-black card_movie" key={movie.id}>
           {movie.documentId}<br/>
           {movie.title}<br/>
           {movie.dialogue}<br/>

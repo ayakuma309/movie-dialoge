@@ -47,7 +47,7 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
   }
 
   return (
-    <div className='my-5 '>
+    <div className='my-5 card_movie'>
       <Typography id="modal-modal-title" variant="h6" component="h2">
         <small className='text-white'>{title}</small>
       </Typography>

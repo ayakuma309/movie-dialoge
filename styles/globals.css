@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300&display=swap');
 
 body{
   background-image: url('../public/film.jpg');
@@ -18,7 +17,6 @@ body{
 .movie-dialogue{
   height: 100%;
   min-height: 100vh;
-  font-family: 'Noto Serif JP', serif;
 }
 
 .container {
