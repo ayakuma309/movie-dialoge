@@ -49,7 +49,7 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
   return (
     <div className='my-5 card_movie'>
       <Typography id="modal-modal-title" variant="h6" component="h2">
-        <small className='text-white'>{title}</small>
+        <small>{title}</small>
       </Typography>
       <img
         src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
@@ -58,7 +58,12 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
       />
       {isEditing ? (
         <div>
-          <input type="text" value={editedDialogue} onChange={(e) => setEditedDialogue(e.target.value)} />
+          <input
+            type="text"
+            value={editedDialogue}
+            onChange={(e) => setEditedDialogue(e.target.value)}
+            className='h-32 w-full'
+          />
           <Button size='small' onClick={() => updatePost(documentId)}>
             保存
           </Button>
@@ -69,21 +74,22 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
       ) : (
         <>
           <Typography
-          className='text-white'
           id="modal-modal-description" sx={{ mt: 2 ,mb:2}}>
             {editedDialogue}
           </Typography>
-          <Link href={`/movie/${documentId}/movieDetail`}>
-            <Button size="small">
-              詳細
+          <div className='flex'>
+            <Link href={`/movie/${documentId}/movieDetail`}>
+              <Button size="small">
+                詳細
+              </Button>
+            </Link>
+            <Button size="small" onClick={editPost}>
+              編集
             </Button>
-          </Link>
-          <Button size="small" onClick={editPost}>
-            編集
-          </Button>
-          <Button size="small" onClick={deletePost}>
-            削除
-          </Button>
+            <Button size="small" onClick={deletePost}>
+              削除
+            </Button>
+          </div>
         </>
       )}
     </div>

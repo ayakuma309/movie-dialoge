@@ -1,13 +1,12 @@
 import { useUser } from '@/lib/auth';
-import { collection,  getDocs, getFirestore } from 'firebase/firestore';
+import { collection, getDocs, getFirestore } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-
 interface MovieProps {
   documentId: string;
   id: string;
   title: string;
   dialogue: string;
-  poster_paths: string[];
+  poster_path: string;
   likes: LikeProps[];
 }
 
@@ -45,14 +44,14 @@ const FavoriteMovie = () => {
             id: movieData.id,
             title: movieData.title,
             dialogue: movieData.dialogue,
-            poster_paths: movieData.poster_paths,
+            poster_path: movieData.poster_path,
             likes: likesData,
           };
 
           moviesWithLikesData.push(movieWithLikesData);
         }
 
-        setMoviesWithLikes(moviesWithLikesData); // ステートに保存
+        setMoviesWithLikes(moviesWithLikesData);
       } catch (error) {
         console.error('Error fetching movies with likes:', error);
       }
@@ -61,14 +60,18 @@ const FavoriteMovie = () => {
     fetchMoviesWithLikes();
   }, []);
 
+
   return (
     <div className='container'>
       {moviesWithLikes.map((movie) => (
         <div className="mx-auto text-black card_movie" key={movie.id}>
-          {movie.documentId}<br/>
           {movie.title}<br/>
+          <img
+            src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${movie.poster_path}`}
+            alt={movie.title + ' poster'}
+            className="mx-auto"
+          />
           {movie.dialogue}<br/>
-          {movie.poster_paths}<br/>
         </div>
       ))}
     </div>

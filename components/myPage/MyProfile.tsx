@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "../../lib/auth";
 import Link from "next/link";
 import { Avatar } from "@mui/material";
@@ -10,6 +10,7 @@ import FavoriteMovie from "./FavoriteMovie";
 const MyProfile: NextPage = () => {
   const user = useUser();
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState('post'); // デフォルトは投稿一覧
 
   useEffect(() => {
     if (!user) {
@@ -21,6 +22,9 @@ const MyProfile: NextPage = () => {
     return null;
   }
 
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
   const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
 
   return (
@@ -51,24 +55,27 @@ const MyProfile: NextPage = () => {
               </div>
               <div className="container mx-auto flex flex-col flex-wrap px-5 py-2">
                 <div className="mx-auto mb-10 flex flex-wrap">
-                  <a className="bg-white text-gray-500 inline-flex w-1/2 items-center justify-center rounded-t border-b-2 px-4 py-3 leading-none tracking-wider hover:border-gray-500  hover:bg-gray-100 hover:text-gray-500 sm:w-auto sm:justify-start">
-                    <p className="w-auto whitespace-nowrap px-4 text-sm">
-                      投稿一覧
-                    </p>
+                  <a
+                    className={`inline-flex w-1/2 items-center justify-center rounded-t border-b-2 px-4 py-3 leading-none tracking-wider border-gray-500 hover:border-gray-500 hover:bg-gray-100 hover:text-gray-500 sm:w-auto sm:justify-start ${
+                      activeTab === 'post' ? 'border-gray-500 bg-gray-100 text-gray-500' : ''
+                    }`}
+                    onClick={() => handleTabClick('post')}
+                  >
+                    <p className="w-auto whitespace-nowrap px-4 text-sm">投稿一覧</p>
                   </a>
-                  <a className="inline-flex w-1/2 items-center justify-center rounded-t border-b-2 px-4 py-3 leading-none tracking-wider hover:border-gray-500  hover:bg-gray-100 hover:text-gray-500 sm:w-auto sm:justify-start">
-                    <p className="w-auto whitespace-nowrap px-4 text-sm">
-                      お気に入りの投稿
-                    </p>
+                  <a
+                    className={`inline-flex w-1/2 items-center justify-center rounded-t border-b-2 px-4 py-3 leading-none tracking-wider border-gray-500 hover:border-gray-500 hover:bg-gray-100 hover:text-gray-500 sm:w-auto sm:justify-start ${
+                      activeTab === 'favorite' ? 'border-gray-500 bg-gray-100 text-gray-500' : ''
+                    }`}
+                    onClick={() => handleTabClick('favorite')}
+                  >
+                    <p className="w-auto whitespace-nowrap px-4 text-sm">お気に入りの投稿</p>
                   </a>
                 </div>
                 <div>
-                  <FavoriteMovie />
-                  <MyPostMovie />
+                  {activeTab === 'post' && <MyPostMovie />}
+                  {activeTab === 'favorite' && <FavoriteMovie />}
                 </div>
-                <Link href="/">
-                  <button className=""></button>
-                </Link>
               </div>
             </div>
           </div>

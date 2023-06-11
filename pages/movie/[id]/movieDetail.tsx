@@ -89,7 +89,7 @@ const MovieNewDialogue: NextPage = () => {
     <Layout title={title}>
       <div className='container mx-auto mt-8 pb-16 text-white sm:max-w-xl md:max-w-2xl lg:max-w-4xl'>
         <h1 className='my-5 text-3xl font-bold'>{title}</h1>
-        <div className='text-center card'>
+        <div className='text-center card_movie'>
           <img
             src={`https://image.tmdb.org/t/p/w185_and_h278_bestv2/${poster_path}`}
             alt={title + ' poster'}

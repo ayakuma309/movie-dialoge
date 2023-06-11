@@ -8,7 +8,6 @@ import { DialogueModalProps } from '@/types/MovieTypes';
 import { Box, Modal, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import EditIcon from "@mui/icons-material/Edit";
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -122,12 +121,13 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             {user !== null && (
               <div className='flex justify-center my-3'>
                 <Link href={`/movie/${documentId}/movieDetail`}>
-                  <button className='btn btn-primary ml-2'>
-                    <EditIcon/>
+                  <button className='px-1 py-1 bg-gray-500 text-white rounded-md mr-2'>
+                    詳細
                   </button>
                 </Link>
                 <div className="flex justify-center">
-                  {isLiked ? <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
+                  {isLiked ?
+                    <FavoriteIcon color="secondary" onClick={handleUnlikeSave}/> : <FavoriteBorderIcon onClick={handleLikeSave}/>}
                 </div>
               </div>
             )}

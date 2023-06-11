@@ -1,5 +1,4 @@
 import { initializeApp, getApps } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
 
 import 'firebase/analytics'
 import 'firebase/auth'
@@ -19,5 +18,4 @@ if (typeof window !== 'undefined' && getApps().length === 0) {
   }
 
   initializeApp(firebaseConfig)
-  getAnalytics()
 }
