@@ -1,5 +1,5 @@
 import { useUser } from '@/lib/auth';
-import { collection, getDocs, getFirestore } from 'firebase/firestore';
+import { collection, doc, getDocs, getFirestore, onSnapshot, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 interface MovieProps {
   documentId: string;
@@ -22,11 +22,13 @@ const FavoriteMovie = () => {
   useEffect(() => {
     const fetchMoviesWithLikes = async () => {
       try {
+        // moviesコレクションの参照
         const moviesCollectionRef = collection(db, 'movies');
         const moviesQuerySnapshot = await getDocs(moviesCollectionRef);
 
         const moviesWithLikesData: MovieProps[] = [];
 
+        //for文でmoviesコレクションの中身でループ
         for (const movieDoc of moviesQuerySnapshot.docs) {
           const movieData = movieDoc.data() as MovieProps;
 
@@ -34,21 +36,25 @@ const FavoriteMovie = () => {
           const likesCollectionRef = collection(db, 'movies', movieDoc.id, 'likes');
           const likesQuerySnapshot = await getDocs(likesCollectionRef);
 
-          const likesData = likesQuerySnapshot.docs.map((likeDoc) => {
+          const likesData: LikeProps[] = [];
+          likesQuerySnapshot.forEach((likeDoc) => {
             const likeData = likeDoc.data() as LikeProps;
-            return { ...likeData };
+            likesData.push(likeData);
           });
+          // すでにいいねしているかの判定
+          const currentUserLikes = likesData.filter((like) => like.userId === user?.uid);
 
-          const movieWithLikesData: MovieProps = {
-            documentId: movieDoc.id,
-            id: movieData.id,
-            title: movieData.title,
-            dialogue: movieData.dialogue,
-            poster_path: movieData.poster_path,
-            likes: likesData,
-          };
-
-          moviesWithLikesData.push(movieWithLikesData);
+          if (currentUserLikes.length > 0) {
+            const movieWithLikesData: MovieProps = {
+              documentId: movieDoc.id,
+              id: movieData.id,
+              title: movieData.title,
+              dialogue: movieData.dialogue,
+              poster_path: movieData.poster_path,
+              likes: currentUserLikes,
+            };
+            moviesWithLikesData.push(movieWithLikesData);
+          }
         }
 
         setMoviesWithLikes(moviesWithLikesData);
@@ -58,9 +64,8 @@ const FavoriteMovie = () => {
     };
 
     fetchMoviesWithLikes();
-  }, []);
-
-
+  }, [user]);
+  console.log(moviesWithLikes);
   return (
     <div className='container'>
       {moviesWithLikes.map((movie) => (
