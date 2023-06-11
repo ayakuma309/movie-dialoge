@@ -58,8 +58,7 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
       />
       {isEditing ? (
         <div>
-          <input
-            type="text"
+          <textarea
             value={editedDialogue}
             onChange={(e) => setEditedDialogue(e.target.value)}
             className='h-32 w-full'

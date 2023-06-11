@@ -57,6 +57,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           poster_path,
           user_id: user.uid,
           dialogue: dialogue,
+          createdAt: new Date(),
         });
         router.push(`/`);
       } else {

@@ -14,7 +14,7 @@ const Home: NextPage = () => {
             <div className="flex items-center justify-center">
               {user !== null && (
                 <Link href="/search">
-                  <button className="btn btn-primary">
+                  <button className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2">
                     <AddCircleIcon />
                   </button>
                 </Link>

@@ -25,6 +25,7 @@ export interface AllDialogueProps {
   title: string;
   dialogue: string;
   poster_path: string;
+  createdAt: string;
 }
 //DialogueModal.tsx
 export interface DialogueModalProps {
