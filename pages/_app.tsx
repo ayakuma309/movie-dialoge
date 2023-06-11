@@ -12,15 +12,18 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 
 const router = useRouter();
-  useEffect(() => {
-    const handleRouterChange = (url: any) => {
-      gtag.pageview(url);
-    };
-    router.events.on("routeChangeComplete", handleRouterChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouterChange);
-    };
-  }, [router.events]);
+
+useEffect(() => {
+  const handleRouterChange = (url: any) => {
+    gtag.pageview(url);
+  };
+
+  router.events.on('routeChangeComplete', handleRouterChange);
+
+  return () => {
+    router.events.off('routeChangeComplete', handleRouterChange);
+  };
+}, [router.events]);
 
 
 type Props = {
@@ -38,24 +41,26 @@ const Auth = ({ children }: Props): JSX.Element => {
 function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_MEASUREMENT_ID}`}
-      />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${gtag.GA_MEASUREMENT_ID}');
-          `,
-        }}
-      />
       <Auth>
-        <Component {...pageProps} />
+        <>
+          <Script
+            strategy="afterInteractive"
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_MEASUREMENT_ID}`}
+          />
+          <Script
+            id="gtag-init"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${gtag.GA_MEASUREMENT_ID}');
+              `,
+            }}
+          />
+          <Component {...pageProps} />
+        </>
       </Auth>
     </RecoilRoot>
   );
