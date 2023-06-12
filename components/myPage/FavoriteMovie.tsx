@@ -1,6 +1,8 @@
 import { useUser } from '@/lib/auth';
-import { collection, doc, getDocs, getFirestore, onSnapshot, query } from 'firebase/firestore';
+import { collection,  deleteDoc,  doc,  getDocs, getFirestore, query } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+
 interface MovieProps {
   documentId: string;
   id: string;
@@ -11,6 +13,7 @@ interface MovieProps {
 }
 
 interface LikeProps {
+  documentId: string;
   userId: string;
 }
 
@@ -39,7 +42,11 @@ const FavoriteMovie = () => {
           const likesData: LikeProps[] = [];
           likesQuerySnapshot.forEach((likeDoc) => {
             const likeData = likeDoc.data() as LikeProps;
-            likesData.push(likeData);
+            const likeWithId: LikeProps = {
+              documentId: likeDoc.id,
+              userId: likeData.userId
+            };
+            likesData.push(likeWithId);
           });
           // すでにいいねしているかの判定
           const currentUserLikes = likesData.filter((like) => like.userId === user?.uid);
@@ -65,7 +72,35 @@ const FavoriteMovie = () => {
 
     fetchMoviesWithLikes();
   }, [user]);
-  console.log(moviesWithLikes);
+
+
+  //いいね削除機能
+  const deleteLike = async (movieId: string, likeId: string) => {
+    if (!user) return;
+    if (window.confirm('いいねを削除しますか?')) {
+      try {
+        await deleteDoc(doc(db, 'movies', movieId, 'likes', likeId));
+
+        // いいね削除後、moviesWithLikesから該当movieを削除する
+        setMoviesWithLikes((prevMovies) =>
+          prevMovies.filter((movie) => {
+            //現在の映画が削除されたいいねの対象であるかをチェック
+            if (movie.documentId === movieId) {
+              //映画のいいねリストから削除されたいいねをフィルタリング
+              const updatedLikes = movie.likes.filter((like) => like.documentId !== likeId);
+              //いいねが残っているかどうかをチェックしてもしいいねが残っていればtrueを返し、映画を保持。
+              return updatedLikes.length > 0;
+            }
+            return true; // 映画を保持する
+          })
+          //もしいいねが残っていなければfalseを返し、映画がフィルタリングされる。
+        );
+      } catch (error) {
+        console.error('Error deleting like:', error);
+      }
+    }
+  };
+
   return (
     <div className='container'>
       {moviesWithLikes.map((movie) => (
@@ -77,6 +112,13 @@ const FavoriteMovie = () => {
             className="mx-auto"
           />
           {movie.dialogue}<br/>
+          {movie.likes.map((like) => (
+            <FavoriteIcon
+              color="secondary"
+              key={like.documentId}
+              onClick={() => deleteLike(movie.documentId, like.documentId)}
+            />
+          ))}
         </div>
       ))}
     </div>
