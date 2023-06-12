@@ -9,6 +9,7 @@ import { MovieModalProps } from '../../types/MovieTypes';
 import { collection, addDoc, getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import uuid from 'react-uuid';
+import { toast } from 'react-toastify';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -59,12 +60,14 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           dialogue: dialogue,
           createdAt: new Date(),
         });
+        toast.success("投稿しました");
         router.push(`/`);
       } else {
         // ユーザーがログインしていない場合の処理
         console.log('User is not logged in');
       }
     } catch (error) {
+      toast.error("投稿に失敗しました");
       console.error('Error adding document: ', error);
     }
   };

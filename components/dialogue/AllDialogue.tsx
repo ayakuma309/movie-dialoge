@@ -88,7 +88,6 @@ const AllDialogue = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isLoading, isPaginationFinished]);
-  console.log(movies);
   return (
     <div className='dialogue'>
       <div>

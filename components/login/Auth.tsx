@@ -9,6 +9,7 @@ import DialogModal from '../common/DialogModal'
 import { Box, Grid, IconButton, TextField } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import styles from "../../styles/Auth.module.css"
+import { toast } from 'react-toastify'
 
 const Auth: NextPage = () => {
   const router = useRouter()
@@ -66,24 +67,32 @@ const Auth: NextPage = () => {
           });
         }
       }
+      toast.success("新規登録しました。")
       router.push("/");
     } catch (error) {
+      toast.error("新規登録に失敗しました。")
       console.error("Error signing up: ", error);
     }
   };
   //ログイン
   const signInEmail = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    //auth.signInWithEmailAndPassword(email, password)の一行でログイン処理を行っている。
-    await signInWithEmailAndPassword(auth, email, password)
-    router.push("/")
-  };
+    try{
+      //auth.signInWithEmailAndPassword(email, password)の一行でログイン処理を行っている。
+      await signInWithEmailAndPassword(auth, email, password)
+      toast.success("ログインしました。")
+      router.push("/")
+    } catch (error) {
+      console.error("Error signing in: ", error);
+      toast.error("ログインに失敗しました。新規登録していないユーザーです")
+    }
+  }
 
   const signInGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
     await signInWithPopup(auth, provider).catch(() => {
-      alert("ログインに失敗しました");
+      toast.error("ログインに失敗しました。")
     });
     router.push("/")
   }
@@ -212,7 +221,7 @@ const Auth: NextPage = () => {
         <div>
           <button
             type='submit'
-            className='group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 text-sm font-medium text-white bg-Color focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            className='group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 text-sm font-medium text-black bg-Color focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
             disabled={ !email || password.length < 6 }>
             <span className='absolute inset-y-0 left-0 flex items-center pl-3'>
               <svg
@@ -232,7 +241,7 @@ const Auth: NextPage = () => {
             {isLogin ? 'ログイン' : 'アカウント作成'}
           </button>
           <button
-            className='group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 my-2 text-sm font-medium text-dark-500 text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
+            className='group relative flex w-full justify-center rounded-md border border-transparent  py-2 px-4 my-2 text-sm font-medium text-dark-500 text-black bg-Color focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'
             onClick={signInGoogle}
           >
             SignIn with Google

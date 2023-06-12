@@ -40,7 +40,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
   const handleLikeSave = () => {
     if (!user) return;
     setDoc(doc(db, 'movies', documentId, 'likes', user.uid), {
-      username: user.displayName,
+      userId: user.uid
     });
     setIsLiked(true);
   };
@@ -71,6 +71,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
 
     checkIfLiked();
   }, [documentId, user]);
+
   return (
     <div>
       <button onClick={handleOpen}>

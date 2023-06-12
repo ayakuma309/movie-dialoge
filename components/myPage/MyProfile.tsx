@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { useUser } from "../../lib/auth";
-import Link from "next/link";
-import { Avatar } from "@mui/material";
-import { useRouter } from "next/router";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import { useUser } from "../../lib/auth";
+import { deleteUser, getAuth } from "firebase/auth";
+import { collection, deleteDoc, doc, getDocs, getFirestore, query, where } from "firebase/firestore";
 import MyPostMovie from "./MyPostMovie";
 import FavoriteMovie from "./FavoriteMovie";
+import { Avatar } from "@mui/material";
 
 const MyProfile: NextPage = () => {
+  const auth = getAuth();
+  const db = getFirestore();
   const user = useUser();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('post'); // デフォルトは投稿一覧
@@ -22,11 +26,40 @@ const MyProfile: NextPage = () => {
     return null;
   }
 
+  //タブ
   const handleTabClick = (tab:string) => {
     setActiveTab(tab);
   };
   const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
 
+  //退会処理
+  const onClickDeleteUser = async () => {
+    if(window.confirm("本当に退会しますか?")) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        try{
+          // Firebase Authenticationからユーザーを削除
+          await deleteUser(currentUser);
+
+          //ユーザードキュメントを削除
+          const userRef = doc(db, 'users', currentUser.uid);
+          await deleteDoc(userRef);
+
+          // ユーザーが投稿した映画を削除
+          const moviesQuerySnapshot = await getDocs(query(collection(db, 'movies'), where('user_id', '==', currentUser.uid)));
+          moviesQuerySnapshot.forEach(async (movieDoc) => {
+            const movieRef = doc(db, 'movies', movieDoc.id);
+            console.log(movieRef);
+            await deleteDoc(movieRef);
+          });
+
+          router.push('/');
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      }
+    }
   return (
     <main title="Profile-Page">
       <section className="relative py-10">
@@ -51,6 +84,13 @@ const MyProfile: NextPage = () => {
                       マイページ編集
                     </button>
                   </Link>
+                  <button
+                    className="rounded bg-gray-500 text-white px-4 py-4 text-xs font-bold hover:bg-white hover:text-gray-600"
+                    type="button"
+                    onClick={onClickDeleteUser}
+                  >
+                    退会する
+                  </button>
                 </div>
               </div>
               <div className="container mx-auto flex flex-col flex-wrap px-5 py-2">

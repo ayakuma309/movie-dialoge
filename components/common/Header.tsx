@@ -68,8 +68,9 @@ const Header: React.FC = () => {
                     <button
                       className="block rounded-md px-3 py-2 text-sm text-gray-900 hover:bg-gray-300"
                       role="menuitem"
+                      onClick={handleLogout}
                     >
-                      <button onClick={handleLogout}>ログアウト</button>
+                      ログアウト
                     </button>
                   </div>
                 ) : undefined}
