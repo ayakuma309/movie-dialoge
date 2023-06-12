@@ -7,8 +7,8 @@ import {
   onAuthStateChanged,
 } from "firebase/auth";
 
-type UserState = User | null; // null の場合はログインしていない状態
-const userState = atom<UserState>({
+type UserStatus = User | null; // null の場合はログインしていない状態
+const userState = atom<UserStatus>({
   key: "userState",
   default: null,
   dangerouslyAllowMutability: true,
@@ -44,6 +44,6 @@ export const useAuth = (): boolean => {
 };
 
 //useUser() はその UserState を他のコンポーネントで呼び出すための関数
-export const useUser = (): UserState => {
+export const useUser = (): UserStatus => {
   return useRecoilValue(userState);
 };

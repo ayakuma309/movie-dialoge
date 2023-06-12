@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useUser } from "../../lib/auth";
+import { deleteUser, getAuth } from "firebase/auth";
 import Link from "next/link";
 import { Avatar } from "@mui/material";
 import { useRouter } from "next/router";
@@ -8,6 +9,7 @@ import MyPostMovie from "./MyPostMovie";
 import FavoriteMovie from "./FavoriteMovie";
 
 const MyProfile: NextPage = () => {
+  const auth = getAuth();
   const user = useUser();
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('post'); // デフォルトは投稿一覧
@@ -22,10 +24,25 @@ const MyProfile: NextPage = () => {
     return null;
   }
 
+  //タブ
   const handleTabClick = (tab:string) => {
     setActiveTab(tab);
   };
   const avatarSrc = user.photoURL || "/user.png"; // user.photoURL が null の場合にデフォルトの画像を表示
+
+  //退会処理
+  const onClickDeleteUser = () => {
+    if(window.confirm("本当に退会しますか?")) {
+      const currentUser = auth.currentUser;
+      if (currentUser) {
+        deleteUser(currentUser).then(() => {
+          router.push('/');
+        }).catch((error:any) => {
+          console.log(error);
+        })
+      }
+    }
+  }
 
   return (
     <main title="Profile-Page">
@@ -51,6 +68,13 @@ const MyProfile: NextPage = () => {
                       マイページ編集
                     </button>
                   </Link>
+                  <button
+                    className="rounded bg-gray-500 text-white px-4 py-4 text-xs font-bold hover:bg-white hover:text-gray-600"
+                    type="button"
+                    onClick={onClickDeleteUser}
+                  >
+                    退会する
+                  </button>
                 </div>
               </div>
               <div className="container mx-auto flex flex-col flex-wrap px-5 py-2">
