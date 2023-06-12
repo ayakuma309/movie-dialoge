@@ -9,6 +9,7 @@ import DialogModal from '../common/DialogModal'
 import { Box, Grid, IconButton, TextField } from '@mui/material'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import styles from "../../styles/Auth.module.css"
+import { toast } from 'react-toastify'
 
 const Auth: NextPage = () => {
   const router = useRouter()
@@ -66,8 +67,10 @@ const Auth: NextPage = () => {
           });
         }
       }
+      toast.success("新規登録しました。")
       router.push("/");
     } catch (error) {
+      toast.error("新規登録に失敗しました。")
       console.error("Error signing up: ", error);
     }
   };
@@ -77,10 +80,11 @@ const Auth: NextPage = () => {
     try{
       //auth.signInWithEmailAndPassword(email, password)の一行でログイン処理を行っている。
       await signInWithEmailAndPassword(auth, email, password)
+      toast.success("ログインしました。")
       router.push("/")
     } catch (error) {
       console.error("Error signing in: ", error);
-      alert("ログインに失敗しました。新規登録していないユーザーです。");
+      toast.error("ログインに失敗しました。新規登録していないユーザーです")
     }
   }
 
@@ -88,7 +92,7 @@ const Auth: NextPage = () => {
     const provider = new GoogleAuthProvider();
     const auth = getAuth();
     await signInWithPopup(auth, provider).catch(() => {
-      alert("ログインに失敗しました");
+      toast.error("ログインに失敗しました。")
     });
     router.push("/")
   }

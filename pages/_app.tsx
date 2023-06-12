@@ -10,6 +10,9 @@ import { RecoilRoot } from "recoil";
 import { useAuth } from "../lib/auth";
 import { useRouter } from "next/router";
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify";
+
 type Props = {
   children: JSX.Element;
 };
@@ -58,6 +61,18 @@ function App({ Component, pageProps }: AppProps) {
             }}
           />
           <Component {...pageProps} />
+          <ToastContainer
+          position="top-center"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss={false}
+          draggable={false}
+          pauseOnHover={false}
+          theme="light"
+        />
         </>
       </Auth>
     </RecoilRoot>
