@@ -4,7 +4,9 @@
 
 
 body{
-  background: linear-gradient(to top, #E9B9D5, #A55EAD, #0A087D);
+  background-image: url('../public/film.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .bg-Color{
@@ -36,7 +38,6 @@ body{
   transition: all 0.2s ease;
   position: relative;
   cursor: pointer;
-  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +56,6 @@ body{
   transition: all 0.2s ease;
   position: relative;
   cursor: pointer;
-  border-radius: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -70,4 +70,19 @@ body{
   padding: 5px;
   content: var(--card);
   color: var(--suit);
+}
+
+.card_movie_detail{
+  margin: 0 1rem 2rem;
+  padding: 2.2rem 2.5rem;
+  width: 80%;
+  overflow: scroll;
+  background: #f8f4f3;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
