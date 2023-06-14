@@ -32,7 +32,7 @@ const style = {
 };
 
 const MovieModal: NextPage<MovieModalProps> = (props) => {
-  const { id, title, poster_path } = props;
+  const { id, title, poster_path, overview } = props;
   const [open, setOpen] = useState(false);
   const [dialogue, setDialogue] = useState("");
 
@@ -56,6 +56,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           id, //tmdbのid
           title,
           poster_path,
+          overview,
           user_id: user.uid,
           dialogue: dialogue,
           createdAt: new Date(),
@@ -106,7 +107,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             >
             セリフを入力
             </label>
-            <textarea
+            <textarea 
               id="description"
               name="description"
               placeholder="セリフを入力してください"

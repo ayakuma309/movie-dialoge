@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import { RotatingLines } from "react-loader-spinner";
 
 type Props = {
   children: JSX.Element;
@@ -22,7 +23,17 @@ type Props = {
 const Auth = ({ children }: Props): JSX.Element => {
   const isLoading = useAuth();
 
-  return isLoading ? <p>Loading...</p> : children;
+  return isLoading ? (
+    <div className="my-24 mx-auto" style={{ textAlign: 'center', height: '500px' }}>
+      <RotatingLines
+        strokeColor="grey"
+        strokeWidth="5"
+        animationDuration="0.75"
+        width="96"
+        visible={true}
+      />
+    </div>
+    ) : children;
 };
 
 function App({ Component, pageProps }: AppProps) {
