@@ -6,6 +6,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
+import { toast } from "react-toastify";
 
 type UserStatus = User | null; // null の場合はログインしていない状態
 const userState = atom<UserStatus>({
@@ -19,6 +20,7 @@ export const logout = (): Promise<void> => {
   const auth = getAuth();
   const confirmed = window.confirm("ログアウトしてもよろしいですか？");
   if (confirmed) {
+    toast.success("ログアウトしました");
     return signOut(auth);
   } else {
     return Promise.resolve(); // ログアウトをキャンセルした場合は Promise を解決する
