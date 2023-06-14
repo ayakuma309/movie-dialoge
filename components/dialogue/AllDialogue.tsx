@@ -108,9 +108,9 @@ const AllDialogue = () => {
           <p>No movies to display.</p>
         )}
 
-        {isLoading && <p>Loading...</p>}
+        {isLoading && <p className="my-24" style={{ textAlign: 'center', height: '500px' }}>Loading...</p>}
 
-        {isPaginationFinished && <p>No more movies to load.</p>}
+        {isPaginationFinished && <p className='text-center'>No more movies to load.</p>}
       </div>
     </div>
   );

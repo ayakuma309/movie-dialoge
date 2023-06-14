@@ -13,7 +13,7 @@ export default function UserPage() {
               <MyProfile />
             </div>
           ) : (
-            <p>ロード中…</p>
+            <p className="my-24" style={{ textAlign: 'center', height: '500px'}}>Loading...</p>
           )}
         </div>
       </div>

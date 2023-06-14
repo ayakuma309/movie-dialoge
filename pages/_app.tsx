@@ -22,7 +22,7 @@ type Props = {
 const Auth = ({ children }: Props): JSX.Element => {
   const isLoading = useAuth();
 
-  return isLoading ? <p>Loading...</p> : children;
+  return isLoading ? <p className="my-24" style={{ textAlign: 'center', height: '500px'}}>Loading...</p> : children;
 };
 
 function App({ Component, pageProps }: AppProps) {

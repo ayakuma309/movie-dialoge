@@ -1,7 +1,7 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import {  useEffect, useState } from 'react';
-import { addDoc, collection, doc, getDoc, getDocs, getFirestore, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { addDoc, collection, doc, getDoc,  getFirestore, onSnapshot,  query } from 'firebase/firestore';
 import { CommentTypeProps } from '@/types/CommentTypes';
 import Layout from '@/components/common/Layout';
 import { useUser } from '@/lib/auth';
@@ -40,14 +40,13 @@ const MovieNewDialogue: NextPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       const unsubscribe = onSnapshot(
-        query(collection(db, 'movies', id as string, 'comments'), orderBy('timestamp', 'desc')),
+        query(collection(db, 'movies', id as string, 'comments')),
         (snapshot) => {
           setComments(
             snapshot.docs.map((doc) => ({
               id: doc.id,
               text: doc.data().text,
               username: doc.data().username,
-              timestamp: doc.data().timestamp,
             }))
           );
         }
@@ -73,11 +72,9 @@ const MovieNewDialogue: NextPage = () => {
     try {
       await addDoc(collection(db, 'movies', id as string, 'comments'), {
         text: comment,
-        timestamp: Date.now(),
         username: user.displayName,
       });
       setComment("");
-      console.log(comment);
       console.log('コメントが正常に保存されました');
     } catch (error) {
       console.error('コメントの保存中にエラーが発生しました:', error);
