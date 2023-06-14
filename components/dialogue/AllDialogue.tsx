@@ -12,6 +12,7 @@ import {
   query,
   startAfter,
 } from 'firebase/firestore';
+import { RotatingLines } from 'react-loader-spinner';
 
 const AllDialogue = () => {
   const [movies, setMovies] = useState<AllDialogueProps[]>([]);
@@ -108,7 +109,18 @@ const AllDialogue = () => {
           <p>No movies to display.</p>
         )}
 
-        {isLoading && <p className="my-24" style={{ textAlign: 'center', height: '500px' }}>Loading...</p>}
+        {isLoading &&
+          (
+            <div className="my-24 mx-auto" style={{ textAlign: 'center', height: '500px' }}>
+              <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="96"
+                visible={true}
+              />
+            </div>
+          )}
 
         {isPaginationFinished && <p className='text-center'>No more movies to load.</p>}
       </div>
