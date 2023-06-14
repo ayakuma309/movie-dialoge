@@ -3,6 +3,7 @@ export interface MovieInfo {
   id: number;
   title: string;
   poster_path: string;
+  overview: string;
 }
 
 //MovieItem.tsx
@@ -15,6 +16,7 @@ export interface MovieModalProps {
   id: number;
   title: string;
   poster_path: string;
+  overview: string;
 }
 
 //AllDialogue.tsx
@@ -34,14 +36,16 @@ export interface DialogueModalProps {
   dialogue: string;
   poster_path: string;
 }
+
+
 //movieDetail.tsx
 export interface DialogueProps {
-  genres: string[
-    {
-      id: number;
-      name: string;
-    }
-  ];
+  documentId: string;
+  movie_id: string;
+  id: string;
+  title: string;
+  dialogue: string;
+  poster_path: string;
   overview: string;
-  tagline: string;
+  createdAt: string;
 }

@@ -61,9 +61,9 @@ const MovieNewDialogue: NextPage = () => {
 
 
   if (!movie) {
-    return <div>Loading...</div>;
+    return <p className="my-24" style={{ textAlign: 'center', height: '500px'}}>Loading...</p>;
   }
-  const { title, poster_path, dialogue} = movie;
+  const { title, poster_path, dialogue, overview } = movie;
 
   //コメント新規投稿
   const newComment = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,6 +94,7 @@ const MovieNewDialogue: NextPage = () => {
             />
         </div>
         <h1 className='text-2xl mt-5 mb-5 font-bold'>「{dialogue}」</h1>
+        <p>{overview}</p>
       </div>
       <div className='mb-5 flex justify-center'>
         <form onSubmit={newComment}>
