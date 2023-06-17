@@ -6,6 +6,8 @@ import { deleteDoc, doc, getFirestore, updateDoc} from 'firebase/firestore';
 import Link from 'next/link';
 
 const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
+  // propsの受け取り時、propsが一つ以上のときも{}で分割代入使えます、既知でしたらスルーお願いします。
+  // const EditPostMovie: NextPage<EditPostMovieProps> = ({ documentId, title, poster_path, onDelete }) => {
   const { documentId, title,  poster_path,onDelete } = props;
   const [editedDialogue, setEditedDialogue] = useState(props.dialogue);
   const [isEditing, setIsEditing] = useState(false);
@@ -26,6 +28,7 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
       dialogue: editedDialogue,
     })
       .then(() => {
+        // ここもtoastありますし使ったほうがuserもわかりやすそうでは？
         console.log('投稿が更新されました');
         setIsEditing(false);
       })

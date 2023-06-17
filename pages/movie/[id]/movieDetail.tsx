@@ -86,6 +86,7 @@ const MovieNewDialogue: NextPage = () => {
         username: user.displayName,
       });
       setComment("");
+      // ここらへんもtoast使ってもよいかもですね、どっかで使っていたはず
       console.log('コメントが正常に保存されました');
     } catch (error) {
       console.error('コメントの保存中にエラーが発生しました:', error);

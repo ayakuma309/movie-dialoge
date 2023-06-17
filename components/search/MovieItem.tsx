@@ -6,8 +6,9 @@ import { NextPage } from 'next';
 const MovieItem: NextPage<MovieItemProps> = ({ movies }) => {
   return (
     <div className="flex flex-wrap mx-auto justify-center">
+      {/* movies?.filterという書き方にしないとmoviesが０個のときエラーになるっぽいですね */}
       {movies
-        .filter((movie) => movie.poster_path)
+        ?.filter((movie) => movie.poster_path)
         .map((movie) => (
           <div className="card_movie mx-auto" key={movie.id}>
             <MovieModal

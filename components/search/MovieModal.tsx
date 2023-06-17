@@ -33,6 +33,8 @@ const style = {
 
 const MovieModal: NextPage<MovieModalProps> = (props) => {
   const { id, title, poster_path, overview } = props;
+  // なにがopenなのかわかりにくいのでisModalOpenとか、isFormOpenといったopenするものの名前を入れておくと良いと思います、
+  // また、こんな感じのtrue or falseのstateであれば接頭辞にisを付けたりしますので蛇足ですが頭に入れておくとよいかなと！
   const [open, setOpen] = useState(false);
   const [dialogue, setDialogue] = useState("");
 
@@ -48,6 +50,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
 
   const saveMovie = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    // try catchいいですね！
     try {
       const user = auth.currentUser;
       if (user) {
@@ -59,6 +62,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           overview,
           user_id: user.uid,
           dialogue: dialogue,
+          // ↓serverTimestamp使いましょう、何か理由があってこっちにしているならOKです！
           createdAt: new Date(),
         });
         toast.success("投稿しました");
@@ -107,7 +111,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             >
             セリフを入力
             </label>
-            <textarea 
+            <textarea
               id="description"
               name="description"
               placeholder="セリフを入力してください"
