@@ -7,7 +7,7 @@ import Layout from '@/components/common/Layout';
 import { useUser } from '@/lib/auth';
 import { TextField } from '@mui/material';
 import MovieComments from '@/components/movieDetail/MovieComments';
-import { RotatingLines } from 'react-loader-spinner';
+
 const MovieNewDialogue: NextPage = () => {
   const user = useUser();
   const db = getFirestore();
@@ -63,14 +63,8 @@ const MovieNewDialogue: NextPage = () => {
 
   if (!movie) {
     return (
-      <div className="my-24 mx-auto" style={{ textAlign: 'center', height: '500px' }}>
-        <RotatingLines
-          strokeColor="grey"
-          strokeWidth="5"
-          animationDuration="0.75"
-          width="96"
-          visible={true}
-        />
+      <div className="my-24 mx-auto text-center" style={{ height: '500px' }}>
+        loading...
       </div>
     );
   }
