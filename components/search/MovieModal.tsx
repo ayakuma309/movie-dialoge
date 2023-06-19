@@ -27,6 +27,9 @@ const style = {
   borderRadius: '10px',
   "@media screen and (max-width:900px)": {
     width: '80%',
+  },
+  "@media screen and (max-width:600px)": {
+    width: '80%',
     flexDirection: 'column',
   },
 };
