@@ -7,6 +7,7 @@ import Layout from '@/components/common/Layout';
 import { useUser } from '@/lib/auth';
 import { TextField } from '@mui/material';
 import MovieComments from '@/components/movieDetail/MovieComments';
+import { toast } from 'react-toastify';
 
 const MovieNewDialogue: NextPage = () => {
   const user = useUser();
@@ -80,9 +81,9 @@ const MovieNewDialogue: NextPage = () => {
         username: user.displayName,
       });
       setComment("");
-      console.log('コメントが正常に保存されました');
+      toast.success('コメントを投稿しました');
     } catch (error) {
-      console.error('コメントの保存中にエラーが発生しました:', error);
+      toast.error('コメントの投稿に失敗しました');
     }
   };
 

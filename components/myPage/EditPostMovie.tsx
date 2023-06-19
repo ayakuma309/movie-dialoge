@@ -4,32 +4,33 @@ import { EditPostMovieProps } from '../../types/ProfileTypes';
 import { Button, Typography } from '@mui/material';
 import { deleteDoc, doc, getFirestore, updateDoc} from 'firebase/firestore';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
-const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
-  const { documentId, title,  poster_path,onDelete } = props;
-  const [editedDialogue, setEditedDialogue] = useState(props.dialogue);
+const EditPostMovie: NextPage<EditPostMovieProps> = ({ dialogue, documentId, title,  poster_path,onDelete }) => {
+  const [editedDialogue, setEditedDialogue] = useState(dialogue);
   const [isEditing, setIsEditing] = useState(false);
   const db = getFirestore();
 
    //dialogueが変更された場合に編集中のダイアログを更新する
   useEffect(() => {
-    setEditedDialogue(props.dialogue);
-  }, [props.dialogue]);
+    setEditedDialogue(dialogue);
+  }, [dialogue]);
 
   const editPost = () => {
     setIsEditing(true);
     // 元の投稿のタイトルと内容を表示する
-    setEditedDialogue(props.dialogue);
+    setEditedDialogue(dialogue);
   }
   const updatePost = (documentId: string) => {
     updateDoc(doc(db, 'movies', documentId), {
       dialogue: editedDialogue,
     })
       .then(() => {
-        console.log('投稿が更新されました');
+        toast.success('投稿が更新されました');
         setIsEditing(false);
       })
       .catch(() => {
+        toast.error('投稿の更新に失敗しました');
         alert('Errorが発生しました');
       });
   };
@@ -37,10 +38,11 @@ const EditPostMovie: NextPage<EditPostMovieProps> = (props) => {
     if (window.confirm('削除してもよろしいですか')) {
       deleteDoc(doc(db, 'movies', documentId))
         .then(() => {
-          console.log('削除しました');
+          toast.success('削除しました');
           onDelete(documentId);
         })
         .catch((error) => {
+          toast.error('削除に失敗しました');
           alert(error.message);
         });
     }
