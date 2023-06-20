@@ -7,7 +7,7 @@ const PrivacyPolicy = () => {
       <div className="mx-8 md:mx-20 pt-10">
         <article className="prose prose-sm max-w-none">
           <p>
-            <span className="font-bold">ScriptSelectMovies</span>（以下、「当方」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）におけるユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
+            <span className="font-bold">Serifu Cinema</span>（以下、「当方」といいます。）は、本ウェブサイト上で提供するサービス（以下、「本サービス」といいます。）におけるユーザーの個人情報の取扱いについて、以下のとおりプライバシーポリシー（以下、「本ポリシー」といいます。）を定めます。
           </p>
         </article>
         <hr className="h-px my-8 bg-gray-300 border-0" />

@@ -23,7 +23,7 @@ const Footer: React.FC =() => {
             </li>
           </nav>
           <p className="text-sm text-center mt-2">
-            © 2023 ScriptSelectMovies
+            © 2023 Serifu Cinema
           </p>
         </div>
       </div>
