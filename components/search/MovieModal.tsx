@@ -121,7 +121,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             {dialogue?.trim() &&
               <button
                 type="submit"
-                className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-600 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
+                className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-900 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
               >
                 送信
               </button>
