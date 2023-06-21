@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { MovieModalProps } from '../../types/MovieTypes';
-import { collection, addDoc, getFirestore } from 'firebase/firestore';
+import { collection, addDoc, getFirestore, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import uuid from 'react-uuid';
 import { toast } from 'react-toastify';
@@ -27,17 +27,20 @@ const style = {
   borderRadius: '10px',
   "@media screen and (max-width:900px)": {
     width: '80%',
+  },
+  "@media screen and (max-width:600px)": {
+    width: '80%',
     flexDirection: 'column',
   },
 };
 
 const MovieModal: NextPage<MovieModalProps> = (props) => {
   const { id, title, poster_path, overview } = props;
-  const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [dialogue, setDialogue] = useState("");
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = () => setIsModalOpen(true);
+  const handleClose = () => setIsModalOpen(false);
   const inputDialogue = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setDialogue(e.target.value);
   };
@@ -59,7 +62,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
           overview,
           user_id: user.uid,
           dialogue: dialogue,
-          createdAt: new Date(),
+          createdAt: serverTimestamp(),
         });
         toast.success("投稿しました");
         router.push(`/`);
@@ -81,7 +84,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
         />
       </Button>
       <Modal
-        open={open}
+        open={isModalOpen}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -107,7 +110,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             >
             セリフを入力
             </label>
-            <textarea 
+            <textarea
               id="description"
               name="description"
               placeholder="セリフを入力してください"
@@ -118,7 +121,7 @@ const MovieModal: NextPage<MovieModalProps> = (props) => {
             {dialogue?.trim() &&
               <button
                 type="submit"
-                className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-600 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
+                className="flex items-center justify-center w-full px-10 py-4 text-base font-medium text-center text-neutral-900 transition duration-500 ease-in-out transform bg-gradient-to-r from-indigo-600 to-indigo-300 rounded-xl hover:from-indigo-300 hover:to-indigo-600 hover:text-white"
               >
                 送信
               </button>
