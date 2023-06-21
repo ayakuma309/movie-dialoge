@@ -27,7 +27,7 @@ const editProfile = () => {
 
 
   return (
-    <Layout title='プロフィール編集'>
+    <Layout title='Edit Profile'>
       <div className='flex flex-col items-center justify-center'>
         <h2
           className='text-2xl font-bold text-white my-3'

@@ -6,7 +6,7 @@ import { RotatingLines } from "react-loader-spinner";
 export default function UserPage() {
   const user = useUser();
   return (
-    <Layout title="マイページ">
+    <Layout title="Profile">
       <div>
         <div>
           {user ? (
