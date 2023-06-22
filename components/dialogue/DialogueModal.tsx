@@ -116,8 +116,8 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
             <div>
               <TwitterShareButton
                 url={`https://movie-dialoge.vercel.app/`}
-                title={`${dialogue} by${title}`}
-                hashtags={['DialogueCinema','映画宝探し', 'セリフの映画館']}
+                title={`${dialogue} by${title}\n`}
+                hashtags={['DialogueCinema','映画の宝さがし']}
               >
                 <TwitterIcon size={40} round />
               </TwitterShareButton>
