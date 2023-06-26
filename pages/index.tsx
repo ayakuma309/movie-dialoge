@@ -7,7 +7,7 @@ import AddIcon from '@mui/icons-material/Add';
 const Home: NextPage = () => {
   const user = useUser();
   return (
-    <Layout title="Dialogue Cinema">
+    <Layout title="セリフの映画館">
       <div className="movie-dialogue">
         <div>
           <>

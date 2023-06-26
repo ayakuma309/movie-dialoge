@@ -9,7 +9,7 @@ type MyComponentProps = {
 //Layoutコンポーネントの作成。全体のlayout。引数にchildren, title
 const Layout: React.FC<MyComponentProps> = ({
   children,
-  title = 'Dialogue Cinema',
+  title = 'セリフの映画館',
 }) => {
   return (
     <>
