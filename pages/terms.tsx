@@ -7,7 +7,7 @@ const Terms = () => {
       <div className="mx-8 md:mx-20 pt-10 text-white">
         <article className="prose prose-sm max-w-none">
           <p>
-            この利用規約（以下、「本規約」といいます。）は、<span className="font-bold">Dialogue Cinema</span>（以下、「当方」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
+            この利用規約（以下、「本規約」といいます。）は、<span className="font-bold">セリフの映画館</span>（以下、「当方」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。
           </p>
         </article>
         <hr className="h-px my-8 bg-gray-300 border-0 " />

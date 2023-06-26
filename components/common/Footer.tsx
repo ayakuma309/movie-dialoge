@@ -23,7 +23,7 @@ const Footer: React.FC =() => {
             </li>
           </nav>
           <p className="text-sm text-center mt-2">
-            © 2023 Dialogue Cinema
+            © 2023 セリフの映画館
           </p>
         </div>
       </div>
