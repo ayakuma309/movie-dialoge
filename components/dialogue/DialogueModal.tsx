@@ -8,6 +8,7 @@ import { DialogueModalProps } from '@/types/MovieTypes';
 import { Box, Modal, Typography } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import PageHead from '../common/PageHead';
 
 const style = {
   position: 'absolute' as 'absolute',
@@ -77,6 +78,7 @@ const DialogueModal: NextPage<DialogueModalProps> = (props) => {
 
   return (
     <div>
+      <PageHead title={title} />
       <button onClick={handleOpen}>
         <div
           className="dialogue mt-7 transition duration-500 ease-in-out

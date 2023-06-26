@@ -1,6 +1,6 @@
-import Head from 'next/head'
 import Header from './Header'
 import Footer  from './Footer';
+import PageHead from './PageHead';
 
 type MyComponentProps = {
   children: React.ReactNode
@@ -14,35 +14,7 @@ const Layout: React.FC<MyComponentProps> = ({
   return (
     <>
       <div className='mx-auto flex min-h-screen flex-col items-center justify-center'>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content="映画の宝さがし" />
-        <meta
-          name="og:title"
-          property="og:title"
-          content={title}
-        />
-        <meta
-          name="description"
-          content="映画の宝さがし"
-        />
-        <meta
-          property="og:image"
-          key="ogImage"
-          content={`https://movie-dialoge.vercel.app/ogp.png`}
-        />
-        <meta
-          name="twitter:card"
-          key="twitterCard"
-          content="summary_large_image"
-        />
-        <meta
-          name="twitter:image"
-          key="twitterImage"
-          content={`https://movie-dialoge.vercel.app/ogp.png`}
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+        <PageHead title={title} />
         <header>
           <section id='header'>
             <Header />
