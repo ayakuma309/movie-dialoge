@@ -1,30 +1,16 @@
 import { NextPage } from "next";
-import { useUser } from "../lib/auth";
 import Layout from "../components/common/Layout";
-import AllDialogue from "@/components/dialogue/AllDialogue";
-import Link from "next/link";
-import AddIcon from '@mui/icons-material/Add';
+import TopContents from "../components/topPage/TopContents";
+
 const Home: NextPage = () => {
-  const user = useUser();
   return (
     <Layout title="セリフの映画館">
-      <div className="movie-dialogue">
+      <div className='container flex flex-col items-center sm:max-w-7xl'>
         <div>
-          <>
-            <div className="flex items-center justify-center">
-              {user !== null && (
-                <div className="float_btn">
-                  <Link href="/search">
-                    <AddIcon className="fa-plus"/>
-                  </Link>
-                </div>
-              )}
-            </div>
-            <AllDialogue />
-          </>
+          <TopContents />
         </div>
       </div>
     </Layout>
   );
-};
+}
 export default Home;
