@@ -1,6 +1,5 @@
 import Header from './Header'
 import Footer  from './Footer';
-import PageHead from './PageHead';
 import Head from 'next/head';
 
 type MyComponentProps = {
