@@ -68,7 +68,7 @@ const Auth: NextPage = () => {
         }
       }
       toast.success("新規登録しました。")
-      router.push("/");
+      router.push("/dialogueIndex");
     } catch (error) {
       toast.error("新規登録に失敗しました。")
       console.error("Error signing up: ", error);
@@ -81,7 +81,7 @@ const Auth: NextPage = () => {
       //auth.signInWithEmailAndPassword(email, password)の一行でログイン処理を行っている。
       await signInWithEmailAndPassword(auth, email, password)
       toast.success("ログインしました。")
-      router.push("/")
+      router.push("/dialogueIndex")
     } catch (error) {
       console.error("Error signing in: ", error);
       toast.error("ログインに失敗しました。新規登録していないユーザーです")

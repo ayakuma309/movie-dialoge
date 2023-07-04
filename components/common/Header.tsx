@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
-import { useUser, logout } from "../../lib/auth";
+import { useUser } from "../../lib/auth";
+import LogoutButton from "../login/LogoutButton";
 const Header: React.FC = () => {
   const user = useUser();
   const [menuOpen, setMenuOpen] = useState(false); //leftMenuState
-  const handleLogout = (): void => {
-    logout().catch((error) => console.error(error));
-  };
 
   //leftMenu関数
   const handleMenuOpenClick = () => {
@@ -65,13 +63,7 @@ const Header: React.FC = () => {
                         マイページ
                       </p>
                     </Link>
-                    <button
-                      className="block rounded-md px-3 py-2 text-sm text-gray-900 hover:bg-gray-300"
-                      role="menuitem"
-                      onClick={handleLogout}
-                    >
-                      ログアウト
-                    </button>
+                    <LogoutButton />
                   </div>
                 ) : undefined}
               </div>

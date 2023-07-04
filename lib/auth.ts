@@ -3,10 +3,8 @@ import { atom, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   User,
   getAuth,
-  signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { toast } from "react-toastify";
 
 type UserStatus = User | null; // null の場合はログインしていない状態
 const userState = atom<UserStatus>({
@@ -15,17 +13,6 @@ const userState = atom<UserStatus>({
   dangerouslyAllowMutability: true,
 });
 
-// ログアウト
-export const logout = (): Promise<void> => {
-  const auth = getAuth();
-  const confirmed = window.confirm("ログアウトしてもよろしいですか？");
-  if (confirmed) {
-    toast.success("ログアウトしました");
-    return signOut(auth);
-  } else {
-    return Promise.resolve(); // ログアウトをキャンセルした場合は Promise を解決する
-  }
-};
 // ユーザー情報取得
 export const useAuth = (): boolean => {
 	//isLoading は onAuthStateChanged() を実行中か確認するための状態
