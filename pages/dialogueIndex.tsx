@@ -1,9 +1,11 @@
 import { NextPage } from "next";
 import { useUser } from "../lib/auth";
+
 import Layout from "../components/common/Layout";
 import AllDialogue from "@/components/dialogue/AllDialogue";
 import Link from "next/link";
 import AddIcon from '@mui/icons-material/Add';
+
 
 const dialogueIndex: NextPage = () => {
   const user = useUser();

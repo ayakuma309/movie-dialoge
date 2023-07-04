@@ -7,11 +7,12 @@ import type { AppProps } from 'next/app';
 import '../lib/firebase';
 
 import { RecoilRoot } from "recoil";
-import { useAuth } from "../lib/auth";
 import { useRouter } from "next/router";
 
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
+import { useAuth } from "@/lib/auth";
+
 
 type Props = {
   children: JSX.Element;

@@ -8,6 +8,7 @@ import { useUser } from '@/lib/auth';
 import { TextField } from '@mui/material';
 import MovieComments from '@/components/movieDetail/MovieComments';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 const MovieNewDialogue: NextPage = () => {
   const user = useUser();
@@ -19,6 +20,12 @@ const MovieNewDialogue: NextPage = () => {
   const [comment, setComment] = useState<string>("");
   const [comments, setComments] = useState<CommentTypeProps[]>([]);
 
+  useEffect(() => {
+    if (!user) {
+      router.push('/'); // ログアウトやユーザーがいない場合は '/' にリダイレクト
+    }
+  }, [user]);
+  
   useEffect(() => {
     const fetchMovie = async () => {
       try {
@@ -102,7 +109,7 @@ const MovieNewDialogue: NextPage = () => {
         <p>{overview}</p>
         </div>
       </div>
-      <div className='mb-5 flex justify-center'>
+      <div className='mb-5 flex justify-center flex-col text-center'>
         <form onSubmit={newComment}>
           <div>
             <TextField
@@ -125,6 +132,9 @@ const MovieNewDialogue: NextPage = () => {
         </form>
       </div>
       <MovieComments comments={comments} />
+      <Link href='/dialogueIndex'>
+        <button className='text-white'>← Back to all movies</button>
+      </Link>
     </Layout>
   );
 };
