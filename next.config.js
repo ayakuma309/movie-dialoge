@@ -1,7 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  unoptimized: true,
+  images: {
+    domains: ["image.tmdb.org"],
+    unoptimized: true,
+  },
 }
 
 module.exports = nextConfig
