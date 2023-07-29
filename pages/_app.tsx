@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from "react-toastify";
 import { useAuth } from "@/lib/auth";
+import SeoSetting from "@/components/common/SeoSetting";
 
 
 type Props = {
@@ -46,41 +47,44 @@ function App({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   return (
-    <RecoilRoot>
-      <Auth>
-        <>
-          <Script
-            strategy="afterInteractive"
-            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_MEASUREMENT_ID}`}
+    <>
+      <SeoSetting />
+      <RecoilRoot>
+        <Auth>
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="gtag-init"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gtag.GA_MEASUREMENT_ID}');
+                `,
+              }}
+            />
+            <Component {...pageProps} />
+            <ToastContainer
+            position="top-center"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss={false}
+            draggable={false}
+            pauseOnHover={false}
+            theme="light"
           />
-          <Script
-            id="gtag-init"
-            strategy="afterInteractive"
-            dangerouslySetInnerHTML={{
-              __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', '${gtag.GA_MEASUREMENT_ID}');
-              `,
-            }}
-          />
-          <Component {...pageProps} />
-          <ToastContainer
-          position="top-center"
-          autoClose={3000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss={false}
-          draggable={false}
-          pauseOnHover={false}
-          theme="light"
-        />
-        </>
-      </Auth>
-    </RecoilRoot>
+          </>
+        </Auth>
+      </RecoilRoot>
+    </>
   );
 }
 
